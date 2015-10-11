@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0"
+  metadata-complete="true">
+
+    <servlet>
+        <servlet-name>HelloWorld</servlet-name>
+        <servlet-class>HelloWorld</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HelloWorld</servlet-name>
+        <url-pattern>/HelloWorld</url-pattern>
+    </servlet-mapping>
+	
+	<servlet>
+        <servlet-name>Buy</servlet-name>
+        <servlet-class>Buy</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Buy</servlet-name>
+        <url-pattern>/Buy</url-pattern>
+    </servlet-mapping>
+	
+	<servlet>
+        <servlet-name>SubmitOrder</servlet-name>
+        <servlet-class>SubmitOrder</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubmitOrder</servlet-name>
+        <url-pattern>/SubmitOrder</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SubmitReview</servlet-name>
+        <servlet-class>SubmitReview</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubmitReview</servlet-name>
+        <url-pattern>/SubmitReview</url-pattern>
+    </servlet-mapping>
+	
+	  <servlet>
+        <servlet-name>WriteReview</servlet-name>
+        <servlet-class>WriteReview</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WriteReview</servlet-name>
+        <url-pattern>/WriteReview</url-pattern>
+    </servlet-mapping>
+	
+	 <servlet>
+        <servlet-name>ViewReviews</servlet-name>
+        <servlet-class>ViewReviews</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewReviews</servlet-name>
+        <url-pattern>/ViewReviews</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SignUp</servlet-name>
+        <servlet-class>SignUp</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignUp</servlet-name>
+        <url-pattern>/SignUp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignIn</servlet-name>
+        <servlet-class>SignIn</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignIn</servlet-name>
+        <url-pattern>/SignIn</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Microsoft</servlet-name>
+        <servlet-class>Microsoft</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Microsoft</servlet-name>
+        <url-pattern>/Microsoft</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddToCart</servlet-name>
+        <servlet-class>AddToCart</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddToCart</servlet-name>
+        <url-pattern>/AddToCart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CheckOut</servlet-name>
+        <servlet-class>CheckOut</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckOut</servlet-name>
+        <url-pattern>/CheckOut</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PlaceOrder</servlet-name>
+        <servlet-class>PlaceOrder</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PlaceOrder</servlet-name>
+        <url-pattern>/PlaceOrder</url-pattern>
+    </servlet-mapping>
+</web-app>
