@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
-public class PlaceOrder extends HttpServlet {
+public class OrderPlace extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	MongoClient mongo;
@@ -44,72 +44,44 @@ public class PlaceOrder extends HttpServlet {
 			HttpSession s=request.getSession();
     		Object username=	s.getAttribute("username");
 			
-    		List<Cart> list= (List<Cart>) s.getAttribute("list");
-  			DBObject product = new BasicDBObject();
-    		//product.put("productList", product);
-			int total=0;
-			//String[] cart = { "readWrite" };
-    	//	commandArguments.put("roles", roles);
-  			for(Cart cart : list){
-   				
-   				total=total +(cart.price *cart.quantity);
-
-    			product.put("productList", cart);
-			
- 			}
-			
-    		DB db = mongo.getDB("gameWebsite");
-				
-			// If the collection does not exists, MongoDB will create it for you
-			DBCollection myReviews = db.getCollection("orders");
-			System.out.println("Collection myReviews selected successfully");
-				
-			BasicDBObject doc = new BasicDBObject("title", "myReviews").
-				append("username", username).
-				append("total", total).
-				append("reviewRating", reviewRating).
-				append("reviewDate", reviewDate).
-				append("reviewText", reviewText);
-									
-			myReviews.insert(doc);
-
-
-
+  			PrintWriter out = response.getWriter();
+  			
   			List<Cart> list= (List<Cart>) s.getAttribute("list");
-  			DBObject product = new BasicDBObject();
-    		//product.put("productList", product);
-			int total=0;
-			//String[] cart = { "readWrite" };
-    	//	commandArguments.put("roles", roles);
+  			Map<String, Object> products = new BasicDBObject();
+			List<Integer> cartList = new ArrayList<>();
+  			int total=0;
   			for(Cart cart : list){
-   				
-   				total=total +(cart.price *cart.quantity);
 
-    			product.put("productList", cart);
+   				total=total +(cart.price *cart.quantity);
+				products.put("prodcut",cart);
 			
+				cartList.add(cart.Id);
+ //  out.println("Cost "+ cart.getCost());
  			}
 
+
+out.println("yayycdd");
 			DB db = mongo.getDB("gameWebsite");
 			// If the collection does not exists, MongoDB will create it for you
 			Map<String, Object> commandArguments = new BasicDBObject();
 			DBCollection myOrders = db.getCollection("orders");
 			commandArguments.put("username", username);
     		commandArguments.put("total", total);
+    		//String[] roles = { "readWrite" };
+    		commandArguments.put("items", cartList);
+    		commandArguments.put("status", "inprocess");
+    		commandArguments.put("isCancelled", "no");
     		
-    		
-    		commandArguments.put("product", product);
+    		//commandArguments.put("product", product);
     		BasicDBObject doc = new BasicDBObject(commandArguments);
 			myOrders.insert(doc);
-			 PrintWriter out = response.getWriter();
+			
+			
 
 			out.println("order placed successfully");
 		//	request.getRequestDispatcher("/").forward(request, response);
 
-		
-
-
-		  
-			
+	
 			
 		} catch (MongoException e) {
 			e.printStackTrace();

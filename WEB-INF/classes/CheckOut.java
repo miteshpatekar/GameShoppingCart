@@ -79,7 +79,7 @@ public class CheckOut extends HttpServlet {
 	            
 	 //        }
 
-int total=0;
+			int total=0;
 		  out.println("<html>");
 			out.println("<head> </head>");
 			out.println("<body>");
@@ -94,7 +94,7 @@ int total=0;
  			}
 
  			out.println("Total Value ="+total);
- 			out.println("<form class = 'submit-button' method = 'get' action = 'PlaceOrder'>");
+ 			out.println("<form class = 'submit-button' method = 'get' action = 'OrderPlace'>");
 			out.println("<input type='submit' name = 'submit' value = 'Place Order'>");
 			out.println("</form'>");
 			

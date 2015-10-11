@@ -120,11 +120,11 @@
         <url-pattern>/CheckOut</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>PlaceOrder</servlet-name>
-        <servlet-class>PlaceOrder</servlet-class>
+        <servlet-name>OrderPlace</servlet-name>
+        <servlet-class>OrderPlace</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>PlaceOrder</servlet-name>
-        <url-pattern>/PlaceOrder</url-pattern>
+        <servlet-name>OrderPlace</servlet-name>
+        <url-pattern>/OrderPlace</url-pattern>
     </servlet-mapping>
 </web-app>
