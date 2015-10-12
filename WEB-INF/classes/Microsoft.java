@@ -50,6 +50,7 @@ public class Microsoft extends HttpServlet {
 		
 		HttpSession s=request.getSession();
     		String username=(String)s.getAttribute("userName");
+    		String role=(String)s.getAttribute("role");
 		PrintWriter out = response.getWriter();
 
 		HashMapProducts hmp=new HashMapProducts();
@@ -97,7 +98,22 @@ out.println("<div id='container'>");
             out.println("<li class='end'>");out.println("<a href='signup.html'>Sign Up");
             out.println("</a>");out.println("</li>");
             }
-            
+            if(role!=null)
+            {
+         
+            if(role.equals("customer"))
+            {
+            	out.println("<li class='end'><a href='/GameWebsite/MyOrders'>My Orders</a></li>"); 
+            }
+            if(role.equals("salesMan"))
+            {
+            	out.println("<li class='end'><a href='/GameWebsite/CustomerOrders'>Customer Orders</a></li>"); 
+            }
+            if(role.equals("storeManager"))
+            {
+            	out.println("<li class='end'><a href='/GameWebsite/UpdateProducts'>Update Products</a></li>"); 
+            }
+}
             if(username!=null)
     	{
     		out.println("<li class='end' style='float:right'><a href='/GameWebsite/LogOut'>Log Out</a></li>"); 

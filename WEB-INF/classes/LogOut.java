@@ -40,7 +40,8 @@ public class LogOut extends HttpServlet {
 		try{
 		PrintWriter out = response.getWriter();
 		HttpSession s=request.getSession();
-    	String username=(String)s.getAttribute("username");
+    	String username=(String)s.getAttribute("userName");
+    	String role=(String)s.getAttribute("role");
 
 			s.invalidate();
 			request.getRequestDispatcher("/Index").forward(request, response);

@@ -56,6 +56,7 @@ public class SignUp extends HttpServlet {
 
 			 HttpSession s=request.getSession();
     		s.setAttribute("userName",uname);
+    		s.setAttribute("role","customer");
 			 System.out.println("user inserted successfully");
 			request.getRequestDispatcher("/Index").forward(request, response);
 	

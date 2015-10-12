@@ -17,6 +17,7 @@ import javax.servlet.http.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.lang.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,21 +25,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
+import org.bson.types.ObjectId;
 
 public class CancelOrder extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
+	MongoClient mongo;
 
 	 static HashMap<Integer,Product> hmap ;
 	public void init(){
 		//Connect to Mongo DB
-		MongoClient mongo = new MongoClient("localhost", 27017);
-						
-		// if database doesn't exists, MongoDB will create it for you
-		DB db = mongo.getDB("CustomerReviews");
-		
-		DBCollection myReviews = db.getCollection("myReviews");
+		 mongo = new MongoClient("localhost", 27017);
+
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,6 +45,8 @@ public class CancelOrder extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		String orderId= request.getParameter("orderId");
+
+		out.println(orderId);
 		HttpSession s=request.getSession();
 		String username=(String)s.getAttribute("userName");
   		List<Cart> list= (List<Cart>) s.getAttribute("list");
@@ -55,15 +55,29 @@ public class CancelOrder extends HttpServlet {
     			list =new ArrayList<>();
   			}
 
-		HashMapProducts hmp=new HashMapProducts();
-		  hmp.setHashMapProduct();
-		  hmap=hmp.getHashMapProduct();
-		  Iterator<Integer> productIterator=hmap.keySet().iterator();
-		   while(productIterator.hasNext())
-	        {
-	            Integer id=productIterator.next();
+  			DB db = mongo.getDB("gameWebsite");
+				ObjectId objid =new ObjectId(orderId);
+			DBCollection orders = db.getCollection("orders");
+  	BasicDBObject newDocument = new BasicDBObject();
+	newDocument.append("$set", new BasicDBObject().append("isCancelled", "yes"));
+			newDocument.append("$set", new BasicDBObject().append("status", "Cancelled"));
+	BasicDBObject searchQuery = new BasicDBObject().append("_id", objid);
 
-	            Product p=hmap.get(id);
+	orders.update(searchQuery, newDocument);
+
+
+
+
+
+		// HashMapProducts hmp=new HashMapProducts();
+		//   hmp.setHashMapProduct();
+		//   hmap=hmp.getHashMapProduct();
+		//   Iterator<Integer> productIterator=hmap.keySet().iterator();
+		//    while(productIterator.hasNext())
+	 //        {
+	 //            Integer id=productIterator.next();
+
+	 //            Product p=hmap.get(id);
 	           /* if(p.Id==orderId)
 
 	            {
@@ -75,7 +89,7 @@ public class CancelOrder extends HttpServlet {
 	           	out.println("Successfully Added to cart" +p.Name);
 	            }*/
 	            
-	        }
+	       // }
 
 out.println("<html>");
 
@@ -136,56 +150,7 @@ out.println("<div id='container'>");
 			out.println("</article>");
 	out.println("<article class='expanded'>");
 
-out.println("<table>");
-out.println("<tr>");
-				out.println("<td>");
-				out.println("Name");
-
-				out.println("</td>");
-				out.println("<td>");
-				out.println("Price");
-				
-				out.println("</td>");
-				out.println("<td>");
-				out.println("Quantity");
-				out.println("</td>");
-				out.println("</tr>");
-			for(Cart cart : list){
-   				
-   				out.println("<tr>");
-				out.println("<td>");
-				out.println(cart.Name);
-
-				out.println("</td>");
-				out.println("<td>");
-				out.println(cart.price);
-				
-				out.println("</td>");
-				out.println("<td>");
-				out.println("<form class = 'submit-button' method = 'get' action = 'CheckOut'>");
-				out.println("<input type='text' name = 'quantity' value = '"+cart.quantity+"'>");
-				
-				out.println("</td>");
-				out.println("</tr>");
-			
- //  out.println("Cost "+ cart.getCost());
- 			}
- 			out.println("<tr>");
-				out.println("<td>");
-
-	out.println("<form class = 'submit-button' method = 'get' action = 'CheckOut'>");
-			out.println("<input type='submit' name = 'submit' value = 'Check Out'>");
-			out.println("</form>");
-				out.println("</td>");
-				out.println("<td>");
-				
-				out.println("</tr>");
- 			//out.println("Total Value ="+cart.quantity+"'>");
- 		
-			
-			out.println("</table>");
-
-
+		out.println("Cancelled order successfully ");
 
 
 

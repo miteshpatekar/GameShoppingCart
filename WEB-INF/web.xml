@@ -105,6 +105,31 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Sony</servlet-name>
+        <servlet-class>Sony</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Sony</servlet-name>
+        <url-pattern>/Sony</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Nintendo</servlet-name>
+        <servlet-class>Nintendo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Nintendo</servlet-name>
+        <url-pattern>/Nintendo</url-pattern>
+    </servlet-mapping>
+
+<servlet>
+        <servlet-name>Accessories</servlet-name>
+        <servlet-class>Accessories</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Accessories</servlet-name>
+        <url-pattern>/Accessories</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>AddToCart</servlet-name>
         <servlet-class>AddToCart</servlet-class>
     </servlet>
@@ -152,6 +177,22 @@
     <servlet-mapping>
         <servlet-name>CancelOrder</servlet-name>
         <url-pattern>/CancelOrder</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CustomerOrders</servlet-name>
+        <servlet-class>CustomerOrders</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomerOrders</servlet-name>
+        <url-pattern>/CustomerOrders</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateProducts</servlet-name>
+        <servlet-class>UpdateProducts</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateProducts</servlet-name>
+        <url-pattern>/UpdateProducts</url-pattern>
     </servlet-mapping>
     
 </web-app>

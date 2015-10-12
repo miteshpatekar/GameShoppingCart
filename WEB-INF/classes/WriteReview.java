@@ -47,7 +47,10 @@ public class WriteReview extends HttpServlet {
 		int productId= 	Integer.parseInt(request.getParameter("productId"));
 		HttpSession s=request.getSession();
 		String username=(String)s.getAttribute("userName");
-
+		if(username==null)
+		{
+			response.sendRedirect("signin.html");
+		}
   		
 		HashMapProducts hmp=new HashMapProducts();
 		  hmp.setHashMapProduct();

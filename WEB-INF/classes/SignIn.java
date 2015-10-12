@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Date;
 
+
 public class SignIn extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -59,17 +60,14 @@ PrintWriter out = response.getWriter();
     			//out.println(obj.get("username"));
     			HttpSession s=request.getSession();
     			s.setAttribute("userName",uname);
+    			s.setAttribute("role",obj.get("role").toString());
 			 	//System.out.println("user logged in successfully");
 				request.getRequestDispatcher("/Index").forward(request, response);
 				}
 				
 			
-				System.out.println("invalid username pwd");
-			
-			 
-
-		
-			
+				out.println("Invalid Username/password");
+					
 			
 		} catch (MongoException e) {
 			e.printStackTrace();
