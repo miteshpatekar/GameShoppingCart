@@ -11,8 +11,8 @@ public class HashMapProducts {
 	
 	//images/img_XBoxOriginal.jpg
 	public void setHashMapProduct() {
-		Product p1=new Product(1,"XBox One","Microsft","images/XBoxOne.jpg",20);
-		Product p2=new Product(2,"XBox 360","Microsft","images/XBox360.jpg",5);
+		Product p1=new Product(1,"XBox One","Microsoft","images/XBoxOne.jpg",20);
+		Product p2=new Product(2,"XBox 360","Microsoft","images/XBox360.jpg",5);
 		Product p3=new Product(3,"PS3","Sony","images/PS3.jpg",100);
 		Product p4=new Product(4,"PS4","Sony","images/PS3.jpg",10);
 		

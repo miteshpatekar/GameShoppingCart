@@ -77,8 +77,9 @@ out.println("yayycdd");
 			myOrders.insert(doc);
 			
 			
+			Object id = (Object)doc.get( "_id" );
 
-			out.println("order placed successfully");
+			out.println("order placed successfully" + id);
 		//	request.getRequestDispatcher("/").forward(request, response);
 
 	

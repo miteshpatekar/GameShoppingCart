@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 public class Index extends HttpServlet {
 	
@@ -38,7 +40,7 @@ public class Index extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 			HttpSession s=request.getSession();
-    		Object username=	s.getAttribute("username");
+    		String username=(String)s.getAttribute("userName");
 		  					
 		try{
 
@@ -60,7 +62,7 @@ out.println("<div id='container'>");
     	out.println("</a>");out.println("</h1>");  
     	if(username!=null)
     	{
-    		out.println("<h5 style="float:right">Welcome "+ username+" !</h1>"); 
+    		out.println("<h5 style='float:right'>Welcome "+ username+" !</h5>"); 
     	}
     	
     out.println("</header>");
@@ -75,10 +77,18 @@ out.println("<div id='container'>");
             out.println("</a>");out.println("</li>");
              out.println("<li class='end'>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
              out.println("</a>");out.println("</li>");
-            out.println("<li class='end'>");out.println("<a href='signin.html'>Sign In");
+            if(username==null){
+           out.println("<li class='end'>");out.println("<a href='signin.html'>Sign In");
             out.println("</a>");out.println("</li>");
             out.println("<li class='end'>");out.println("<a href='signup.html'>Sign Up");
             out.println("</a>");out.println("</li>");
+            }
+            
+            if(username!=null)
+    	{
+    		out.println("<li class='end' style='float:right'><a href='/GameWebsite/LogOut'>Log Out</a></li>"); 
+    	}
+    	
 
         out.println("</ul>");
     out.println("</nav>");

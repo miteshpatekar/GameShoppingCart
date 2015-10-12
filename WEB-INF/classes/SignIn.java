@@ -53,14 +53,14 @@ PrintWriter out = response.getWriter();
 
 	    		
 	    		//out.println(cursor.next());
-	    		//out.println(cursor.next().get("username"));
+	    		//out.println(cursor.next().get("_id"));
 	    		//out.println(cursor.next().find( { type: 'username' } ));
 	    		BasicDBObject obj = (BasicDBObject) cursor.next();
     			//out.println(obj.get("username"));
     			HttpSession s=request.getSession();
-    			s.setAttribute("userId",uname);
+    			s.setAttribute("userName",uname);
 			 	//System.out.println("user logged in successfully");
-				request.getRequestDispatcher("/").forward(request, response);
+				request.getRequestDispatcher("/Index").forward(request, response);
 				}
 				
 			
@@ -68,65 +68,7 @@ PrintWriter out = response.getWriter();
 			
 			 
 
-			//MongoClient mongo = new MongoClient("localhost", 27017);
-   
-
-			// String firstName = request.getParameter("firstName");
-			// String lastName = request.getParameter("lastName");
-			// String address = request.getParameter("address");
-			// int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));							
-										
-			// // If database doesn't exists, MongoDB will create it for you
-			// DB db = mongo.getDB("CSP595Tutorial");
-				
-			// // If the collection does not exists, MongoDB will create it for you
-			// DBCollection myOrders = db.getCollection("myOrders");
-			// System.out.println("Collection myOrders selected successfully");
-				
-			// BasicDBObject doc = new BasicDBObject("title", "myOrders").
-			// 	append("productName", productName).
-			// 	append("productPrice", productPrice).
-			// 	append("firstName", firstName).
-			// 	append("lastName", lastName).
-			// 	append("address", address).
-			// 	append("phoneNumber", phoneNumber);
-					
-			// myOrders.insert(doc);
-				
-			
-			
-			// //Send the response back to the JSP
-			// PrintWriter out = response.getWriter();
-			
-			// out.println("<html>");
-			// out.println("<head> </head>");
-			// out.println("<body>");
-			// out.println("<h1> Order placed for:"+ productName + "</h1>");
-			
-			// out.println("<table>");
-			
-			// out.println("<tr>");
-			// out.println("<td>");
-			// out.println("<a href='index.html'> Index </a>");
-			// out.println("</td>");
-			// out.println("</tr>");
-			
-			// out.println("<tr>");
-			// out.println("<td>");
-			// out.println("<a href='XBox.html'> X Box </a>");
-			// out.println("</td>");
-			// out.println("</tr>");
-			
-			// out.println("<tr>");
-			// out.println("<td>");
-			// out.println("<a href='PlayStation.html'> Play Station </a>");
-			// out.println("</td>");
-			// out.println("</tr>");
-			
-			// out.println("</table>");
-			
-			// out.println("</body>");
-			// out.println("</html>");
+		
 			
 			
 		} catch (MongoException e) {

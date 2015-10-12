@@ -25,10 +25,12 @@
     <servlet>
         <servlet-name>Index</servlet-name>
         <servlet-class>Index</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
         <url-pattern>/Index</url-pattern>
+        <load-on-startup>1</load-on-startup>
     </servlet-mapping>
 	
 	<servlet>
@@ -126,5 +128,13 @@
     <servlet-mapping>
         <servlet-name>OrderPlace</servlet-name>
         <url-pattern>/OrderPlace</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>LogOut</servlet-name>
+        <servlet-class>LogOut</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogOut</servlet-name>
+        <url-pattern>/LogOut</url-pattern>
     </servlet-mapping>
 </web-app>
