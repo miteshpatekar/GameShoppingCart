@@ -17,6 +17,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import javax.servlet.http.*;
 
 public class WriteReview extends HttpServlet {
 	
@@ -25,15 +32,9 @@ public class WriteReview extends HttpServlet {
 	String productName = "";
 	String imageLocation = " ";
 	int productPrice = 0;
-	
+	 static HashMap<Integer,Product> hmap ;
 	public void init(){
-		//Connect to Mongo DB
-		MongoClient mongo = new MongoClient("localhost", 27017);
-						
-		// if database doesn't exists, MongoDB will create it for you
-		DB db = mongo.getDB("CustomerReviews");
 		
-		DBCollection myReviews = db.getCollection("myReviews");
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,36 +44,93 @@ public class WriteReview extends HttpServlet {
 		response.setContentType("text/html");
 		
 		PrintWriter out = response.getWriter();
+		int productId= 	Integer.parseInt(request.getParameter("productId"));
+		HttpSession s=request.getSession();
+		String username=(String)s.getAttribute("userName");
+
+  		
+		HashMapProducts hmp=new HashMapProducts();
+		  hmp.setHashMapProduct();
+		  hmap=hmp.getHashMapProduct();
+		  Iterator<Integer> productIterator=hmap.keySet().iterator();
+		   while(productIterator.hasNext())
+	        {
+	            Integer id=productIterator.next();
+
+	            Product p=hmap.get(id);
+	            if(p.Id==productId)
+
+	            {
+	            	imageLocation=p.imagePath;
+ 					productName=p.Name;
+ 					productPrice=p.price;  				
+	            }
+	            
+	        }
+
+
 						
 		try{
 			//Get the values from the form
-			if (request.getParameter("XBox_Original") != null){
-				productName = "X Box Original";
-				imageLocation = "images/img_XBoxOriginal.jpg";
-			}else if (request.getParameter("XBox_360") != null){
-				productName = "X Box 360";
-				imageLocation = "images/img_XBox360.jpg";
-			}else if (request.getParameter("XBox_One") != null){
-				productName = "X Box One";
-				imageLocation = "images/img_XBoxOne.jpg";
-			}else if (request.getParameter("PlayStation_2") != null){
-				productName = "PlayStation 2";
-				imageLocation = "images/img_PlayStation2.jpg";
-			}else if (request.getParameter("PlayStation_3") != null){
-				productName = "PlayStation 3";
-				imageLocation = "images/img_PlayStation3.jpg";
-			}else if (request.getParameter("PlayStation_4") != null){
-				productName = "PlayStation 4";
-				imageLocation = "images/img_PlayStation4.jpg";
-			}
 			
 			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Buy</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<h1>Write Review</h1>");							
-			out.println(" <h3>" +productName+ "</h3> ");
+
+out.println("<head>");
+	out.println("<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />");
+	out.println("<title>GameZon");
+	out.println("</title>");
+	out.println("<link rel='stylesheet' href='styles.css' type='text/css' />");
+out.println("</head>");
+
+out.println("<body>");
+out.println("<div id='container'>");
+    out.println("<header>");
+    	out.println("<h1>");out.println("<a href='/'>Game");out.println("<span>Zon");out.println("</span>");
+    	out.println("</a>");out.println("</h1>");  
+    	if(username!=null)
+    	{
+    		out.println("<h5 style='float:right'>Welcome "+ username+" !</h5>"); 
+    	}
+    	
+    out.println("</header>");
+    out.println("<nav>");
+    	out.println("<ul>");
+        	out.println("<li class='start selected'>");out.println("<a href='index.html'>Home");out.println("</a>");out.println("</li>");
+            out.println("<li class=''>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");
+            out.println("</a>");out.println("</li>");
+            out.println("<li class=''>");out.println("<a href='/GameWebsite/Sony'>Sony");
+            out.println("</a>");out.println("</li>");
+            out.println("<li class='end'>");out.println("<a href='/GameWebsite/Nintendo'>Nintendo");
+            out.println("</a>");out.println("</li>");
+             out.println("<li class='end'>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
+             out.println("</a>");out.println("</li>");
+            if(username==null){
+           out.println("<li class='end'>");out.println("<a href='signin.html'>Sign In");
+            out.println("</a>");out.println("</li>");
+            out.println("<li class='end'>");out.println("<a href='signup.html'>Sign Up");
+            out.println("</a>");out.println("</li>");
+            }
+            
+            if(username!=null)
+    	{
+    		out.println("<li class='end'><a href='/GameWebsite/MyOrders'>My Orders</a></li>"); 
+    		out.println("<li class='end' style='float:right'><a href='/GameWebsite/LogOut'>Log Out</a></li>"); 
+    	}
+    	
+
+        out.println("</ul>");
+    out.println("</nav>");
+
+	out.println("<img class='header-image' src='images/indexheader.jpg' width = '100%' height = '100%' alt='Index Page Image' />");
+
+    out.println("<div id='body'>");		
+
+	out.println("<section id='content'>");
+
+	    out.println("<article>");
+			out.println("<h2>Welcome to our Game World");out.println("</h2>");
+			
+            out.println(" <h3>" +productName+ "</h3> ");
 			out.println("<form method=\"get\" action=\"SubmitReview\">");
 			out.println("<fieldset>");
 			out.println("<legend>Product information:</legend>");
@@ -84,7 +142,7 @@ public class WriteReview extends HttpServlet {
 			out.println("</tr>");						
 			out.println("<tr>");
 			out.println("<td> Product Price: </td>");
-			out.println("<td> Some Price </td>");
+			out.println("<td> "+productPrice+" </td>");
 			out.println("</tr>");
 			out.println("</table>");
 			out.println("</fieldset>");
@@ -97,7 +155,7 @@ public class WriteReview extends HttpServlet {
 			out.println("</tr>");
 			out.println("<tr>");
 			out.println("<td> User Name: </td>");
-			out.println("<td> <input type=\"text\" name=\"userName\"> </td>");
+			out.println("<td> <input type=\"text\" name=\"userName\" value=\""+username+"\"> </td>");
 			out.println("</tr>");
 			out.println("<tr>");
 			out.println("<td> Review Rating: </td>");
@@ -122,7 +180,46 @@ public class WriteReview extends HttpServlet {
 			out.println("<br><br>");
 			out.println("<input type=\"submit\" value=\"Submit Review\">");
 			out.println("</fieldset>");
-			out.println("</form>");
+			out.println("</form>");	
+		out.println("</article>");
+		
+    out.println("</section>");
+        
+    out.println("<aside class='sidebar'>");
+	
+            out.println("<ul>");	
+               out.println("<li>");
+                    out.println("<h4>Our Products");out.println("</h4>");
+                    out.println("<ul>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Sony'>Sony");
+                        out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Nintendo'>Nintendo");
+                        out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
+                        out.println("</a>");out.println("</li>");
+                    out.println("</ul>");
+                out.println("</li>");                                       
+            out.println("</ul>");
+		
+    out.println("</aside>");
+    
+	out.println("<div class='clear'>");out.println("</div>");
+	out.println("</div>");
+    
+	out.println("<footer>");
+	
+        out.println("<div class='footer-bottom'>");
+            out.println("<p>Let the Game began !");out.println("</p>");
+        out.println("</div>");
+		
+    out.println("</footer>");
+out.println("</div>");
+
+out.println("</body>");
+
+out.println("</html>");
+			
 						
 	    } catch (MongoException e) {
 		e.printStackTrace();

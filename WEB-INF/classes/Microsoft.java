@@ -44,7 +44,7 @@ public class Microsoft extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		response.setContentType("text/html");
 		
@@ -82,8 +82,8 @@ out.println("<div id='container'>");
     out.println("</header>");
     out.println("<nav>");
     	out.println("<ul>");
-        	out.println("<li class='start selected'>");out.println("<a href='index.html'>Homeout");out.println("</a>");out.println("</li>");
-            out.println("<li class=''>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");
+        	out.println("<li class=''>");out.println("<a href='index.html'>Home");out.println("</a>");out.println("</li>");
+            out.println("<li class='start selected'>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");
             out.println("</a>");out.println("</li>");
             out.println("<li class=''>");out.println("<a href='/GameWebsite/Sony'>Sony");
             out.println("</a>");out.println("</li>");
@@ -145,6 +145,7 @@ while(productIterator.hasNext())
 						out.println("<input class = 'submit-button' type = 'submit'  value = 'Add To Cart'>");
 					out.println("</form>");
 					out.println("<form class = 'submit-button' method = 'get' action = 'WriteReview'>");
+					out.println("<input type='hidden' name = 'productId' value = '"+p.Id+"'>");
 						out.println("<input class = 'submit-button' type = 'submit' name = 'XBox_Original' value = 'Write Review'>");
 					out.println("</form>");
 					out.println("<form class = 'submit-button' method = 'get' action = 'ViewReviews'>");
@@ -201,33 +202,6 @@ out.println("</body>");
 
 out.println("</html>");
 			
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			// out.println("<html>");
-			// out.println("<head>");
-			// out.println("<title>Microsft</title>");
-			// out.println("</head>");
-			// out.println("<body>");
-			// out.println("<h1>Microsoft</h1>");							
-			// out.println("<table>");
-			// out.println(username);
-
-			// out.println("</body>");
-						
 	    } catch (MongoException e) {
 		e.printStackTrace();
 	    }

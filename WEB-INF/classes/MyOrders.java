@@ -24,12 +24,12 @@ import java.util.Set;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class Index extends HttpServlet {
+public class MyOrders extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
+	MongoClient mongo;
 	public void init(){
-
+        mongo = new MongoClient("localhost", 27017);
 		
 	}
 	
@@ -41,6 +41,19 @@ public class Index extends HttpServlet {
 		PrintWriter out = response.getWriter();
 			HttpSession s=request.getSession();
     		String username=(String)s.getAttribute("userName");
+
+            DB db = mongo.getDB("gameWebsite");
+            DBCollection collection = db.getCollection("orders");
+            BasicDBObject whereQuery = new BasicDBObject();
+            whereQuery.put("username", username);
+            //BasicDBObject whereQuery1 = new BasicDBObject();
+            //whereQuery.put("password", pwd);
+            DBCursor cursor = collection.find(whereQuery);
+           
+                
+            
+                System.out.println("invalid username pwd");
+
 		  					
 		try{
 
@@ -102,10 +115,30 @@ out.println("<div id='container'>");
 
 	    out.println("<article>");
 			out.println("<h2>Welcome to our Game World");out.println("</h2>");
-			
-            out.println("<p>Check out our new products to have fun with games");out.println("</p>");	
-            
-            out.println("<p>Get the best Products delivered at your door");out.println("</p>");		
+			out.println("<table>");
+             while(cursor.hasNext()) {
+
+                BasicDBObject obj = (BasicDBObject) cursor.next();
+
+            out.println("<tr>");
+                out.println("<td>");
+                    out.println(obj.get("_id"));
+                out.println("</td>");
+               
+            out.println("</tr>");
+
+
+
+
+                //out.println(obj.get("username"));
+                //HttpSession s=request.getSession();
+               // s.setAttribute("userName",uname);
+                //System.out.println("user logged in successfully");
+                //request.getRequestDispatcher("/Index").forward(request, response);
+                }
+
+out.println("</table>");
+
 		out.println("</article>");
 		
     out.println("</section>");

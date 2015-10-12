@@ -99,7 +99,7 @@ out.println("<div id='container'>");
     out.println("</header>");
     out.println("<nav>");
     	out.println("<ul>");
-        	out.println("<li class='start selected'>");out.println("<a href='index.html'>Homeout");out.println("</a>");out.println("</li>");
+        	out.println("<li class='start selected'>");out.println("<a href='index.html'>Home");out.println("</a>");out.println("</li>");
             out.println("<li class=''>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");
             out.println("</a>");out.println("</li>");
             out.println("<li class=''>");out.println("<a href='/GameWebsite/Sony'>Sony");
@@ -232,19 +232,6 @@ out.println("</html>");
 
 
 
-
-
-		  out.println("<html>");
-			out.println("<head> </head>");
-			out.println("<body>");
-			out.println("<h1> Cart Items</h1>");
-			
-			
-
-			
-			out.println("</body>");
-			out.println("</html>");
-		 
 	        
 	        try{
 								

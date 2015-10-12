@@ -17,6 +17,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import javax.servlet.http.*;
 
 public class SubmitReview extends HttpServlet {
 	
@@ -37,12 +44,14 @@ public class SubmitReview extends HttpServlet {
 			int reviewRating = Integer.parseInt(request.getParameter("reviewRating"));	
 			String reviewDate = request.getParameter("reviewDate");
 			String reviewText = request.getParameter("reviewText");
-										
+						
+		HttpSession s=request.getSession();
+		String username=(String)s.getAttribute("userName");				
 			// If database doesn't exists, MongoDB will create it for you
-			DB db = mongo.getDB("CSP595Tutorial");
+			DB db = mongo.getDB("gameWebsite");
 				
 			// If the collection does not exists, MongoDB will create it for you
-			DBCollection myReviews = db.getCollection("myReviews");
+			DBCollection myReviews = db.getCollection("Reviews");
 			System.out.println("Collection myReviews selected successfully");
 				
 			BasicDBObject doc = new BasicDBObject("title", "myReviews").
@@ -59,35 +68,106 @@ public class SubmitReview extends HttpServlet {
 			//Send the response back to the JSP
 			PrintWriter out = response.getWriter();
 						
-			out.println("<html>");
-			out.println("<head> </head>");
-			out.println("<body>");
-			out.println("<h1> Review submitted for:"+ productName + "</h1>");
 			
-			out.println("<table>");
+out.println("<html>");
+
+out.println("<head>");
+	out.println("<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />");
+	out.println("<title>GameZon");
+	out.println("</title>");
+	out.println("<link rel='stylesheet' href='styles.css' type='text/css' />");
+out.println("</head>");
+
+out.println("<body>");
+out.println("<div id='container'>");
+    out.println("<header>");
+    	out.println("<h1>");out.println("<a href='/'>Game");out.println("<span>Zon");out.println("</span>");
+    	out.println("</a>");out.println("</h1>");  
+    	if(username!=null)
+    	{
+    		out.println("<h5 style='float:right'>Welcome "+ username+" !</h5>"); 
+    	}
+    	
+    out.println("</header>");
+    out.println("<nav>");
+    	out.println("<ul>");
+        	out.println("<li class='start selected'>");out.println("<a href='index.html'>Home");out.println("</a>");out.println("</li>");
+            out.println("<li class=''>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");
+            out.println("</a>");out.println("</li>");
+            out.println("<li class=''>");out.println("<a href='/GameWebsite/Sony'>Sony");
+            out.println("</a>");out.println("</li>");
+            out.println("<li class='end'>");out.println("<a href='/GameWebsite/Nintendo'>Nintendo");
+            out.println("</a>");out.println("</li>");
+             out.println("<li class='end'>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
+             out.println("</a>");out.println("</li>");
+            if(username==null){
+           out.println("<li class='end'>");out.println("<a href='signin.html'>Sign In");
+            out.println("</a>");out.println("</li>");
+            out.println("<li class='end'>");out.println("<a href='signup.html'>Sign Up");
+            out.println("</a>");out.println("</li>");
+            }
+            
+            if(username!=null)
+    	{
+    		out.println("<li class='end'><a href='/GameWebsite/MyOrders'>My Orders</a></li>"); 
+    		out.println("<li class='end' style='float:right'><a href='/GameWebsite/LogOut'>Log Out</a></li>"); 
+    	}
+    	
+
+        out.println("</ul>");
+    out.println("</nav>");
+
+	out.println("<img class='header-image' src='images/indexheader.jpg' width = '100%' height = '100%' alt='Index Page Image' />");
+
+    out.println("<div id='body'>");		
+
+	out.println("<section id='content'>");
+
+	    out.println("<article>");
+			out.println("<h2>Review Submitted successfully");out.println("</h2>");
 			
-			out.println("<tr>");
-			out.println("<td>");
-			out.println("<a href='index.html'> Index </a>");
-			out.println("</td>");
-			out.println("</tr>");
-			
-			out.println("<tr>");
-			out.println("<td>");
-			out.println("<a href='XBox.html'> X Box </a>");
-			out.println("</td>");
-			out.println("</tr>");
-			
-			out.println("<tr>");
-			out.println("<td>");
-			out.println("<a href='PlayStation.html'> Play Station </a>");
-			out.println("</td>");
-			out.println("</tr>");
-			
-			out.println("</table>");
-			
-			out.println("</body>");
-			out.println("</html>");
+            
+		out.println("</article>");
+		
+    out.println("</section>");
+        
+    out.println("<aside class='sidebar'>");
+	
+            out.println("<ul>");	
+               out.println("<li>");
+                    out.println("<h4>Our Products");out.println("</h4>");
+                    out.println("<ul>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Sony'>Sony");
+                        out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Nintendo'>Nintendo");
+                        out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
+                        out.println("</a>");out.println("</li>");
+                    out.println("</ul>");
+                out.println("</li>");                                       
+            out.println("</ul>");
+		
+    out.println("</aside>");
+    
+	out.println("<div class='clear'>");out.println("</div>");
+	out.println("</div>");
+    
+	out.println("<footer>");
+	
+        out.println("<div class='footer-bottom'>");
+            out.println("<p>Let the Game began !");out.println("</p>");
+        out.println("</div>");
+		
+    out.println("</footer>");
+out.println("</div>");
+
+out.println("</body>");
+
+out.println("</html>");
+
+
+
 		
 		} catch (MongoException e) {
 			e.printStackTrace();

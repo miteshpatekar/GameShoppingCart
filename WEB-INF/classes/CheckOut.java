@@ -51,58 +51,159 @@ public class CheckOut extends HttpServlet {
 
 		//int productId= 	Integer.parseInt(request.getParameter("productId"));
 		HttpSession s=request.getSession();
+		String username=(String)s.getAttribute("userName");
   		List<Cart> list= (List<Cart>) s.getAttribute("list");
 
   			if(list==null){
     			list =new ArrayList<>();
   			}
 
-		// HashMapProducts hmp=new HashMapProducts();
-		//   hmp.setHashMapProduct();
-		//   hmap=hmp.getHashMapProduct();
-		//   Iterator<Integer> productIterator=hmap.keySet().iterator();
-		//    while(productIterator.hasNext())
-	 //        {
-	 //            Integer id=productIterator.next();
+	
+int total=0;
 
-	 //            Product p=hmap.get(id);
-	 //            if(p.Id==productId)
+out.println("<html>");
 
-	 //            {
-	            	
-  // // Add the name & cost to List
-  // 				list.add(new Cart(productId,p.Name,p.price,1));
+out.println("<head>");
+	out.println("<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />");
+	out.println("<title>GameZon");
+	out.println("</title>");
+	out.println("<link rel='stylesheet' href='styles.css' type='text/css' />");
+out.println("</head>");
 
-  // 				s.setAttribute("list",list);
-	 //           	out.println("Successfully Added to cart" +p.Name);
-	 //            }
-	            
-	 //        }
+out.println("<body>");
+out.println("<div id='container'>");
+    out.println("<header>");
+    	out.println("<h1>");out.println("<a href='/'>Game");out.println("<span>Zon");out.println("</span>");
+    	out.println("</a>");out.println("</h1>");  
+    	if(username!=null)
+    	{
+    		out.println("<h5 style='float:right'>Welcome "+ username+" !</h5>"); 
+    	}
+    	
+    out.println("</header>");
+    out.println("<nav>");
+    	out.println("<ul>");
+        	out.println("<li class='start selected'>");out.println("<a href='index.html'>Home");out.println("</a>");out.println("</li>");
+            out.println("<li class=''>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");
+            out.println("</a>");out.println("</li>");
+            out.println("<li class=''>");out.println("<a href='/GameWebsite/Sony'>Sony");
+            out.println("</a>");out.println("</li>");
+            out.println("<li class='end'>");out.println("<a href='/GameWebsite/Nintendo'>Nintendo");
+            out.println("</a>");out.println("</li>");
+             out.println("<li class='end'>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
+             out.println("</a>");out.println("</li>");
+            if(username==null){
+           out.println("<li class='end'>");out.println("<a href='signin.html'>Sign In");
+            out.println("</a>");out.println("</li>");
+            out.println("<li class='end'>");out.println("<a href='signup.html'>Sign Up");
+            out.println("</a>");out.println("</li>");
+            }
+            
+            if(username!=null)
+    	{
+    		out.println("<li class='end' style='float:right'><a href='/GameWebsite/LogOut'>Log Out</a></li>"); 
+    	}
+    	
 
-			int total=0;
-		  out.println("<html>");
-			out.println("<head> </head>");
-			out.println("<body>");
-			out.println("<h1> Cart Items</h1>");
+        out.println("</ul>");
+    out.println("</nav>");
+
+	out.println("<img class='header-image' src='images/indexheader.jpg' width = '100%' height = '100%' alt='Index Page Image' />");
+
+    out.println("<div id='body'>");		
+
+	out.println("<section id='content'>");
+
+	    out.println("<article>");
+			out.println("<h2>Your Cart");out.println("</h2>");
 			
-			out.println("<table>");
+			out.println("</article>");
+	out.println("<article class='expanded'>");
+
+out.println("<table>");
+
 			for(Cart cart : list){
-   				out.println("yayy");
    				total=total +(cart.price *cart.quantity);
 			
  //  out.println("Cost "+ cart.getCost());
  			}
+out.println("<tr>");
+				out.println("<td>");
+				out.println("Total Value ="+total);
 
- 			out.println("Total Value ="+total);
- 			out.println("<form class = 'submit-button' method = 'get' action = 'OrderPlace'>");
-			out.println("<input type='submit' name = 'submit' value = 'Place Order'>");
-			out.println("</form'>");
-			
+				out.println("</td>");
+				out.println("</tr>");
+
+out.println("<form method='get' action='OrderPlace'>");
+
+out.println("<table>");
+out.println("<tr>");
+out.println("<td>Shipping Address :");  out.println("</td>");
+out.println("<td>");out.println("<input type = 'text' name = 'address' size = 20/>"); out.println("</td>");
+out.println("</tr>");
+out.println("<tr>");
+out.println("<td> Card Number :"); out.println("</td>");
+out.println("<td>");out.println("<input type = 'text' name = 'cardno' size = 20/>"); out.println("</td>");
+out.println("</tr>");
+
+out.println("<tr>");
+out.println("<td>Validity :");  out.println("</td>");
+out.println("<td>");out.println("<input type = 'text' name = 'validity'/>"); out.println("</td>");
+out.println("</tr>");
+out.println("<tr>");
+out.println("<td>CCV :");  out.println("</td>");
+out.println("<td>");out.println("<input type = 'text' name = 'ccv'/>"); out.println("</td>");
+out.println("</tr>");
+out.println("<tr>");
+out.println("<td>"); out.println("</td>");
+out.println("<td>");out.println("<input type = 'submit' value = 'Confirm Order'/>"); out.println("</td>");
+out.println("</tr>");
+out.println("</table>");
+out.println("</form>");
+
+ 			
 			out.println("</table>");
+ 	
 
-			
-			out.println("</body>");
-			out.println("</html>");
+out.println("</article>");
+		
+    out.println("</section>");
+        
+    out.println("<aside class='sidebar'>");
+	
+            out.println("<ul>");	
+               out.println("<li>");
+                    out.println("<h4>Our Products");out.println("</h4>");
+                    out.println("<ul>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Sony'>Sony");
+                        out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Nintendo'>Nintendo");
+                        out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
+                        out.println("</a>");out.println("</li>");
+                    out.println("</ul>");
+                out.println("</li>");                                       
+            out.println("</ul>");
+		
+    out.println("</aside>");
+    
+	out.println("<div class='clear'>");out.println("</div>");
+	out.println("</div>");
+    
+	out.println("<footer>");
+	
+        out.println("<div class='footer-bottom'>");
+            out.println("<p>Let the Game began !");out.println("</p>");
+        out.println("</div>");
+		
+    out.println("</footer>");
+out.println("</div>");
+
+out.println("</body>");
+
+out.println("</html>");
+
 		 
 	        
 	        try{

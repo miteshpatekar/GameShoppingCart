@@ -137,4 +137,12 @@
         <servlet-name>LogOut</servlet-name>
         <url-pattern>/LogOut</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>MyOrders</servlet-name>
+        <servlet-class>MyOrders</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyOrders</servlet-name>
+        <url-pattern>/MyOrders</url-pattern>
+    </servlet-mapping>
 </web-app>
