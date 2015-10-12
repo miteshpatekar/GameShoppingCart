@@ -56,7 +56,7 @@ public class OrderPlace extends HttpServlet {
 				products.put("prodcut",cart);
 			
 				cartList.add(cart.Id);
- //  out.println("Cost "+ cart.getCost());
+ 		out.println("id "+ cart.Id);
  			}
 
 

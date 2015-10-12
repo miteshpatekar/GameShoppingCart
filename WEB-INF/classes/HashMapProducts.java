@@ -13,8 +13,8 @@ public class HashMapProducts {
 	public void setHashMapProduct() {
 		Product p1=new Product(1,"XBox One","Microsft","images/XBoxOne.jpg",20);
 		Product p2=new Product(2,"XBox 360","Microsft","images/XBox360.jpg",5);
-		Product p3=new Product(3,"PS3","Sony","images/PS3_1.jpg",100);
-		Product p4=new Product(4,"PS4","Sony","images/PS3_4.jpg",10);
+		Product p3=new Product(3,"PS3","Sony","images/PS3.jpg",100);
+		Product p4=new Product(4,"PS4","Sony","images/PS3.jpg",10);
 		
 		// TODO Auto-generated method stub
 		 hmap.put(p1.Id, p1);

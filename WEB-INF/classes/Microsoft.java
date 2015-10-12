@@ -73,7 +73,7 @@ while(productIterator.hasNext())
 				out.println("<table>");
 			out.println("<tr>");
 				out.println("<td>");
-					out.println("<img src = '"+p.imagePath+"' width = '200' height = '200' alt = 'X Box Orginal'>");
+					out.println("<img src = '"+p.imagePath+"' width = '200' height = '200' alt = '"+p.Name+"'>");
 				out.println("</td>");
 				out.println("<td>");
 					out.println("<p>"); 

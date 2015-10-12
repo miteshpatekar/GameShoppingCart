@@ -42,11 +42,8 @@ public class AddToCart extends HttpServlet {
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		response.setContentType("text/html");
-		
+			
+		response.setContentType("text/html");		
 		PrintWriter out = response.getWriter();
 
 		int productId= 	Integer.parseInt(request.getParameter("productId"));
@@ -97,6 +94,7 @@ public class AddToCart extends HttpServlet {
 				
 				out.println("</td>");
 				out.println("<td>");
+				out.println("<form class = 'submit-button' method = 'get' action = 'CheckOut'>");
 				out.println("<input type='text' name = 'quantity' value = '"+cart.quantity+"'>");
 				
 				out.println("</td>");

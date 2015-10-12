@@ -23,12 +23,12 @@
   metadata-complete="true">
 
     <servlet>
-        <servlet-name>HelloWorld</servlet-name>
-        <servlet-class>HelloWorld</servlet-class>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>Index</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>HelloWorld</servlet-name>
-        <url-pattern>/HelloWorld</url-pattern>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/Index</url-pattern>
     </servlet-mapping>
 	
 	<servlet>
