@@ -10,6 +10,7 @@ import com.mongodb.WriteConcern;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.ServerAddress;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.ArrayList;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -28,6 +30,7 @@ public class MyOrders extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	MongoClient mongo;
+     static HashMap<Integer,Product> hmap ;
 	public void init(){
         mongo = new MongoClient("localhost", 27017);
 		
@@ -37,7 +40,10 @@ public class MyOrders extends HttpServlet {
 		
 		
 		response.setContentType("text/html");
-		
+		HashMapProducts hmp=new HashMapProducts();
+          hmp.setHashMapProduct();
+          hmap=hmp.getHashMapProduct();
+          Iterator<Integer> productIterator=hmap.keySet().iterator();
 		PrintWriter out = response.getWriter();
 			HttpSession s=request.getSession();
     		String username=(String)s.getAttribute("userName");
@@ -114,8 +120,27 @@ out.println("<div id='container'>");
 	out.println("<section id='content'>");
 
 	    out.println("<article>");
-			out.println("<h2>Welcome to our Game World");out.println("</h2>");
+			out.println("<h2>My Orders");out.println("</h2>");
 			out.println("<table>");
+            List<Integer> cartList = new ArrayList<>();
+
+             out.println("<tr>");
+                out.println("<td>");
+                    out.println("Id");
+                out.println("</td>");
+                out.println("<td>");
+                    out.println("Name");
+                out.println("</td>");
+                 out.println("<td>");
+                    out.println("Date");
+                out.println("</td>");
+                 out.println("<td>");
+                    out.println("Status");
+                out.println("</td>");
+                 out.println("<td>");
+                    out.println("Action");
+                out.println("</td>");
+                 out.println("</tr>");
              while(cursor.hasNext()) {
 
                 BasicDBObject obj = (BasicDBObject) cursor.next();
@@ -123,10 +148,50 @@ out.println("<div id='container'>");
             out.println("<tr>");
                 out.println("<td>");
                     out.println(obj.get("_id"));
+                    String orderId=(String)obj.get("_id");
                 out.println("</td>");
                
+ BasicDBList itemsList = (BasicDBList) obj.get("items");
+    for (int i = 0; i < itemsList.size(); i++) {
+        out.println("<td>");
+                  //  out.println(itemsList.get(i));
+
+           while(productIterator.hasNext())
+            {
+                Integer id=productIterator.next();
+
+                Product p=hmap.get(id);
+                if(p.Id==(int)itemsList.get(i))
+                {
+                     out.println(p.Name);
+                               
+                }
+                
+            }
+
+                out.println("</td>");
+               }
+out.println("<td>");
+                    out.println(obj.get("date"));
+                out.println("</td>");
+out.println("<td>");
+                    out.println(obj.get("status"));
+                out.println("</td>");
+
+                out.println("<td>");
+                   out.println("<form class = 'submit-button' method = 'get' action = 'CancelOrder'>");
+                    out.println("<input type='hidden' name = 'orderId' value = '"+orderId+"'>");
+                out.println("<input type='submit' name = 'quantity' value = 'Cancel Order'>");
+                out.println("</form>");
+                out.println("</td>");
             out.println("</tr>");
 
+
+// cartList=(List<Integer>)obj.get("items");
+// for(int c:cartList)
+// {
+//      out.println(c);
+// }
 
 
 

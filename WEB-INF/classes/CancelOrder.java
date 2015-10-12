@@ -13,8 +13,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.ServerAddress;
-import java.util.*;
-import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.Arrays;
 import java.util.List;
@@ -26,75 +24,58 @@ import java.util.Map;
 import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
 
-public class OrderPlace extends HttpServlet {
+public class CancelOrder extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	MongoClient mongo;
 	
-	public void init() throws ServletException{
-      	// Connect to Mongo DB
-		mongo = new MongoClient("localhost", 27017);
+
+	 static HashMap<Integer,Product> hmap ;
+	public void init(){
+		//Connect to Mongo DB
+		MongoClient mongo = new MongoClient("localhost", 27017);
+						
+		// if database doesn't exists, MongoDB will create it for you
+		DB db = mongo.getDB("CustomerReviews");
+		
+		DBCollection myReviews = db.getCollection("myReviews");
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-		try{
-
-
-			String address = request.getParameter("address");
-			int cardno = Integer.parseInt(request.getParameter("cardno"));
-			String validity = request.getParameter("validity");
-			int ccv = Integer.parseInt(request.getParameter("ccv"));
-
-			HttpSession s=request.getSession();
-    		String username=(String)s.getAttribute("userName");
 			
-  			PrintWriter out = response.getWriter();
-  			
-  			List<Cart> list= (List<Cart>) s.getAttribute("list");
-  			Map<String, Object> products = new BasicDBObject();
-			List<Integer> cartList = new ArrayList<>();
-  			int total=0;
-  			for(Cart cart : list){
+		response.setContentType("text/html");		
+		PrintWriter out = response.getWriter();
 
-   				total=total +(cart.price *cart.quantity);
-				products.put("prodcut",cart);
-			
-				cartList.add(cart.Id);
- 		
- 			}
+		String orderId= request.getParameter("orderId");
+		HttpSession s=request.getSession();
+		String username=(String)s.getAttribute("userName");
+  		List<Cart> list= (List<Cart>) s.getAttribute("list");
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	   //get current date time with Date()
-	   Date date = new Date();
-	   System.out.println(dateFormat.format(date));
+  			if(list==null){
+    			list =new ArrayList<>();
+  			}
 
-			DB db = mongo.getDB("gameWebsite");
-			// If the collection does not exists, MongoDB will create it for you
-			Map<String, Object> commandArguments = new BasicDBObject();
-			DBCollection myOrders = db.getCollection("orders");
-			commandArguments.put("username", username);
-    		commandArguments.put("total", total);
-    		//String[] roles = { "readWrite" };
-    		commandArguments.put("items", cartList);
-    		commandArguments.put("status", "inprocess");
-    		commandArguments.put("isCancelled", "no");
-    		commandArguments.put("address", address);
-    		commandArguments.put("cardno", cardno);
-    		commandArguments.put("validity", validity);
-    		commandArguments.put("ccv", ccv);
-    		commandArguments.put("date", dateFormat.format(date));
-    		
-    		//commandArguments.put("product", product);
-    		BasicDBObject doc = new BasicDBObject(commandArguments);
-			myOrders.insert(doc);
-			
-			
-			Object id = (Object)doc.get( "_id" );
-response.setContentType("text/html");
+		HashMapProducts hmp=new HashMapProducts();
+		  hmp.setHashMapProduct();
+		  hmap=hmp.getHashMapProduct();
+		  Iterator<Integer> productIterator=hmap.keySet().iterator();
+		   while(productIterator.hasNext())
+	        {
+	            Integer id=productIterator.next();
+
+	            Product p=hmap.get(id);
+	           /* if(p.Id==orderId)
+
+	            {
+	            	
+  // Add the name & cost to List
+  				list.add(new Cart(productId,p.Name,p.price,1));
+
+  				s.setAttribute("list",list);
+	           	out.println("Successfully Added to cart" +p.Name);
+	            }*/
+	            
+	        }
 
 out.println("<html>");
 
@@ -136,7 +117,6 @@ out.println("<div id='container'>");
             
             if(username!=null)
     	{
-    		out.println("<li class='end'><a href='/GameWebsite/MyOrders'>My Orders</a></li>"); 
     		out.println("<li class='end' style='float:right'><a href='/GameWebsite/LogOut'>Log Out</a></li>"); 
     	}
     	
@@ -151,36 +131,65 @@ out.println("<div id='container'>");
 	out.println("<section id='content'>");
 
 	    out.println("<article>");
-			out.println("<h2>Microsoft Products");out.println("</h2>");
+			out.println("<h2>Your Cart");out.println("</h2>");
 			
 			out.println("</article>");
 	out.println("<article class='expanded'>");
 
 out.println("<table>");
-	out.println("<tr>");
-				out.println("<td>");
-				out.println("Congratulations !!");
-
-				out.println("</td>");
-				out.println("</tr>");
 out.println("<tr>");
 				out.println("<td>");
-				date.setTime(date.getTime() + 15 * 1000 * 60 * 60 * 24);
-				out.println("Order Placed successfully");
-				out.println("Order will be delivered "+dateFormat.format(date));
+				out.println("Name");
 
 				out.println("</td>");
-				out.println("</tr>");
-out.println("<tr>");
 				out.println("<td>");
-				out.println("Your Order Id is " + id);
-
+				out.println("Price");
+				
+				out.println("</td>");
+				out.println("<td>");
+				out.println("Quantity");
 				out.println("</td>");
 				out.println("</tr>");
-				out.println("</table>");
+			for(Cart cart : list){
+   				
+   				out.println("<tr>");
+				out.println("<td>");
+				out.println(cart.Name);
 
-		
-		out.println("</article>");
+				out.println("</td>");
+				out.println("<td>");
+				out.println(cart.price);
+				
+				out.println("</td>");
+				out.println("<td>");
+				out.println("<form class = 'submit-button' method = 'get' action = 'CheckOut'>");
+				out.println("<input type='text' name = 'quantity' value = '"+cart.quantity+"'>");
+				
+				out.println("</td>");
+				out.println("</tr>");
+			
+ //  out.println("Cost "+ cart.getCost());
+ 			}
+ 			out.println("<tr>");
+				out.println("<td>");
+
+	out.println("<form class = 'submit-button' method = 'get' action = 'CheckOut'>");
+			out.println("<input type='submit' name = 'submit' value = 'Check Out'>");
+			out.println("</form>");
+				out.println("</td>");
+				out.println("<td>");
+				
+				out.println("</tr>");
+ 			//out.println("Total Value ="+cart.quantity+"'>");
+ 		
+			
+			out.println("</table>");
+
+
+
+
+
+out.println("</article>");
 		
     out.println("</section>");
         
@@ -219,14 +228,16 @@ out.println("</body>");
 
 out.println("</html>");
 			
-			
-		} catch (MongoException e) {
-			e.printStackTrace();
-		}
+
+
+
+
+	        
+	        try{
+								
+	    } catch (MongoException e) {
+		e.printStackTrace();
+	    }
+
 	}
-	
-	public void destroy()	{
-      // do nothing.
-	}
-	
 }
