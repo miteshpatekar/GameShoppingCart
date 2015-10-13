@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class CustomerOrders extends HttpServlet {
+public class UpdateProducts extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	MongoClient mongo;
@@ -48,18 +48,8 @@ public class CustomerOrders extends HttpServlet {
 			HttpSession s=request.getSession();
     		String username=(String)s.getAttribute("userName");
             String role=(String)s.getAttribute("role");
-            DB db = mongo.getDB("gameWebsite");
-            DBCollection collection = db.getCollection("orders");
-            BasicDBObject whereQuery = new BasicDBObject();
-            //whereQuery.put("", );
-            //BasicDBObject whereQuery1 = new BasicDBObject();
-            //whereQuery.put("password", pwd);
-            DBCursor cursor = collection.find();
            
-                
-            
-                System.out.println("invalid username pwd");
-
+              
 		  					
 		try{
 
@@ -112,11 +102,11 @@ out.println("<div id='container'>");
             }
             if(role.equals("salesMan"))
             {
-                out.println("<li class='start selected'><a href='/GameWebsite/CustomerOrders'>Customer Orders</a></li>"); 
+                out.println("<li ><a href='/GameWebsite/CustomerOrders'>Customer Orders</a></li>"); 
             }
             if(role.equals("storeManager"))
             {
-                out.println("<li class='end'><a href='/GameWebsite/UpdateProducts'>Update Products</a></li>"); 
+                out.println("<li class='start selected'><a href='/GameWebsite/UpdateProducts'>Update Products</a></li>"); 
             }
 }
 
@@ -153,16 +143,12 @@ out.println("<div id='container'>");
                     out.println("Name");
                 out.println("</td>");
                  out.println("<td>");
-                    out.println("Date");
+                    out.println("Price");
                 out.println("</td>");
                  out.println("<td>");
-                    out.println("Status");
-                out.println("</td>");
-                 
-                out.println("<td>");
                     out.println("Action");
                 out.println("</td>");
-                out.println("<td>");
+                 out.println("<td>");
                     out.println("Action");
                 out.println("</td>");
                  out.println("</tr>");
@@ -172,59 +158,53 @@ out.println("<div id='container'>");
                     out.println("<tr><td><h5>No Orders</h5></td></tr>");
                  }*/
 
-             while(cursor.hasNext()) {
 
-                BasicDBObject obj = (BasicDBObject) cursor.next();
 
             
                // out.println("<td>");
                   //  out.println(obj.get("_id"));
-                    Object orderId=(Object)obj.get("_id");
+                    //Object orderId=(Object)obj.get("_id");
 
               //  out.println("</td>");
                
- BasicDBList itemsList = (BasicDBList) obj.get("items");
-    for (int i = 0; i < itemsList.size(); i++) {
-        out.println("<tr>");
-        out.println("<td>");
+ //BasicDBList itemsList = (BasicDBList) obj.get("items");
+ 
+        
                   //  out.println(itemsList.get(i));
  Iterator<Integer> productIterator=hmap.keySet().iterator();
+
            while(productIterator.hasNext())
             {
+                out.println("<tr>");
+        out.println("<td>");
                 Integer id=productIterator.next();
 
                 Product p=hmap.get(id);
-                if(p.Id==(int)itemsList.get(i))
-                {
-                     out.println(p.Name);
-                               
-                }
-                
-            }
+              
+                out.println(p.Name);
+            
 
                 out.println("</td>");
              
             out.println("<td>");
-                    out.println(obj.get("date"));
+                    out.println(p.price);
                 out.println("</td>");
-            out.println("<td>");
-                    out.println(obj.get("status"));
-                out.println("</td>");
+           
                 
                
                 
-                   
+       
                 
                  out.println("<td>");
                    out.println("<form class = 'submit-button' method = 'get' action = 'UpdateOrder'>");
-                   out.println("<input type='hidden' name = 'orderId' value = '"+orderId.toString()+"'>");
+                   out.println("<input type='hidden' name = 'productId' value = '"+p.Id+"'>");
                 out.println("<input type='submit' name = 'quantity' value = 'Update'>");
                 out.println("</form>");
                 out.println("</td>");
 
                 out.println("<td>");
                    out.println("<form class = 'submit-button' method = 'get' action = 'DeleteOrder'>");
-                   out.println("<input type='hidden' name = 'orderId' value = '"+orderId.toString()+"'>");
+                   out.println("<input type='hidden' name = 'productId' value = '"+p.Id+"'>");
                 out.println("<input type='submit' name = 'quantity' value = 'Delete'>");
                 out.println("</form>");
                 out.println("</td>");
@@ -245,7 +225,7 @@ out.println("<div id='container'>");
                // s.setAttribute("userName",uname);
                 //System.out.println("user logged in successfully");
                 //request.getRequestDispatcher("/Index").forward(request, response);
-                }
+                
 
 out.println("</table>");
 

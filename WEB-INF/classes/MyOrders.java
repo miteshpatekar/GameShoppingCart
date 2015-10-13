@@ -109,6 +109,7 @@ if(role!=null)
             if(role.equals("customer"))
             {
                 out.println("<li class='start selected'><a href='/GameWebsite/MyOrders'>My Orders</a></li>"); 
+                out.println("<li ><a href='/GameWebsite/MyCart'>My Cart</a></li>");
             }
             if(role.equals("salesMan"))
             {

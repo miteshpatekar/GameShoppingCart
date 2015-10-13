@@ -31,6 +31,7 @@ public class WriteReview extends HttpServlet {
 	
 	String productName = "";
 	String imageLocation = " ";
+	String manufacturer = " ";
 	int productPrice = 0;
 	 static HashMap<Integer,Product> hmap ;
 	public void init(){
@@ -66,7 +67,8 @@ public class WriteReview extends HttpServlet {
 	            {
 	            	imageLocation=p.imagePath;
  					productName=p.Name;
- 					productPrice=p.price;  				
+ 					productPrice=p.price;  	
+ 					manufacturer=p.Manufacturer;			
 	            }
 	            
 	        }
@@ -147,6 +149,13 @@ out.println("<div id='container'>");
 			out.println("<td> Product Price: </td>");
 			out.println("<td> "+productPrice+" </td>");
 			out.println("</tr>");
+
+
+			out.println("<tr>");
+			out.println("<td> Manufacturer: </td>");
+			out.println("<td> "+manufacturer+" </td>");
+			out.println("</tr>");
+
 			out.println("</table>");
 			out.println("</fieldset>");
 			out.println("<fieldset>");
@@ -154,13 +163,57 @@ out.println("<div id='container'>");
 			out.println("<table>");
 			out.println("<tr>");
 			out.println("<td> Product Name: </td>");
-			out.println("<td> <input type=\"text\" name= \"productName\" value = \""+productName+"\">  </td>");
+			out.println("<td> <input disabled type=\"text\" name= \"productName\" value = \""+productName+"\">  </td>");
 			out.println("</tr>");
 			out.println("<tr>");
 			out.println("<td> User Name: </td>");
-			out.println("<td> <input type=\"text\" name=\"userName\" value=\""+username+"\"> </td>");
+			out.println("<td> <input disabled type=\"text\" name=\"userName\" value=\""+username+"\"> </td>");
 			out.println("</tr>");
 			out.println("<tr>");
+
+			out.println("<tr>");
+			out.println("<td> Manufacturer: </td>");
+			out.println("<td> <input disabled type=\"text\" name=\"manufacturer\" value=\""+manufacturer+"\"> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
+
+			out.println("<tr>");
+			out.println("<td> User Age: </td>");
+			out.println("<td> <input type=\"number\" name=\"age\" value=''> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
+			out.println("<tr>");
+			out.println("<td> User Gender: </td>");
+			out.println("<td> <input type=\"text\" name=\"gender\" value=''> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
+			out.println("<tr>");
+			out.println("<td> User Ocupation: </td>");
+			out.println("<td> <input type=\"text\" name=\"ocupation\" value=''> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
+			out.println("<tr>");
+			out.println("<td> Retailer City: </td>");
+			out.println("<td> <input type=\"text\" name=\"rcity\" value=''> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
+			out.println("<tr>");
+			out.println("<td> Retailer State: </td>");
+			out.println("<td> <input type=\"text\" name=\"rstate\" value=''> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
+			out.println("<tr>");
+			out.println("<td> Retailer Zip: </td>");
+			out.println("<td> <input type=\"number\" name=\"rzip\" value=''> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
 			out.println("<td> Review Rating: </td>");
 			out.println("<td>");
 			out.println("<select name=\"reviewRating\">");

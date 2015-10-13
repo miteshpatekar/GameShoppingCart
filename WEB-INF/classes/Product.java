@@ -7,6 +7,7 @@ public class Product {
 	String imagePath;
 	int price;
 	int quantity;
+
 	
 	public Product(int id, String Name,String manf,String imagePath,int price){
 		Id=id;
@@ -14,6 +15,7 @@ public class Product {
 		this.price=price;
 		this.Manufacturer=manf;
 		this.imagePath=imagePath;
+
 	}
 
 }

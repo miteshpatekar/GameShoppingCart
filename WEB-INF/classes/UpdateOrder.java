@@ -17,6 +17,7 @@ import javax.servlet.http.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.lang.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,21 +25,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
+import org.bson.types.ObjectId;
 
-public class AddToCart extends HttpServlet {
+public class UpdateOrder extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
+	MongoClient mongo;
 
 	 static HashMap<Integer,Product> hmap ;
 	public void init(){
 		//Connect to Mongo DB
-		MongoClient mongo = new MongoClient("localhost", 27017);
-						
-		// if database doesn't exists, MongoDB will create it for you
-		DB db = mongo.getDB("CustomerReviews");
-		
-		DBCollection myReviews = db.getCollection("myReviews");
+		 mongo = new MongoClient("localhost", 27017);
+
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,42 +44,36 @@ public class AddToCart extends HttpServlet {
 		response.setContentType("text/html");		
 		PrintWriter out = response.getWriter();
 
-		int productId= 	Integer.parseInt(request.getParameter("productId"));
+		String orderId= request.getParameter("orderId");
+
+		//out.println(orderId);
 		HttpSession s=request.getSession();
 		String username=(String)s.getAttribute("userName");
 		String role=(String)s.getAttribute("role");
-		if(username==null)
-		{
-			response.sendRedirect("signin.html");
-		}
+  		
 
-  		List<Cart> list= (List<Cart>) s.getAttribute("list");
+  			DB db = mongo.getDB("gameWebsite");
+				
+			DBCollection orders = db.getCollection("orders");
+			BasicDBObject whereQuery = new BasicDBObject();
+			ObjectId objid =new ObjectId(orderId);
+			
+			
+			whereQuery.put("_id", objid);
+			DBCursor cursor = orders.find(whereQuery);
+			String status="";
+			String isCancelled="";
+			String date ="";
+			while(cursor.hasNext()) {
 
-  			if(list==null){
-    			list =new ArrayList<>();
-  			}
+	    		BasicDBObject obj = (BasicDBObject) cursor.next();
+    			status=(String)obj.get("status");
+    			isCancelled=(String)obj.get("isCancelled");
+    			date=(String)obj.get("date");
+				
+				}
 
-		HashMapProducts hmp=new HashMapProducts();
-		  hmp.setHashMapProduct();
-		  hmap=hmp.getHashMapProduct();
-		  Iterator<Integer> productIterator=hmap.keySet().iterator();
-		   while(productIterator.hasNext())
-	        {
-	            Integer id=productIterator.next();
 
-	            Product p=hmap.get(id);
-	            if(p.Id==productId)
-
-	            {
-	            	
-  // Add the name & cost to List
-  				list.add(new Cart(productId,p.Name,p.price,1));
-
-  				s.setAttribute("list",list);
-	           	out.println("Successfully Added to cart" +p.Name);
-	            }
-	            
-	        }
 
 out.println("<html>");
 
@@ -105,7 +97,7 @@ out.println("<div id='container'>");
     out.println("</header>");
     out.println("<nav>");
     	out.println("<ul>");
-        	out.println("<li >");out.println("<a href='index.html'>Home");out.println("</a>");out.println("</li>");
+        	out.println("<li class='start selected'>");out.println("<a href='index.html'>Home");out.println("</a>");out.println("</li>");
             out.println("<li class=''>");out.println("<a href='/GameWebsite/Microsoft'>Microsoft");
             out.println("</a>");out.println("</li>");
             out.println("<li class=''>");out.println("<a href='/GameWebsite/Sony'>Sony");
@@ -153,69 +145,49 @@ out.println("<div id='container'>");
 	out.println("<section id='content'>");
 
 	    out.println("<article>");
-			out.println("<h2>Your Cart");out.println("</h2>");
+			out.println("<h2>Order Details");out.println("</h2>");
 			
 			out.println("</article>");
 	out.println("<article class='expanded'>");
 
-out.println("<table>");
-out.println("<tr>");
-				out.println("<td>");
-				out.println("Name");
+		out.println("Order details");
 
-				out.println("</td>");
-				out.println("<td>");
-				out.println("Price");
-				
-				out.println("</td>");
-				out.println("<td>");
-				out.println("Quantity");
-				out.println("</td>");
-				out.println("</tr>");
-			for(Cart cart : list){
-   				
-   				out.println("<tr>");
-				out.println("<td>");
-				out.println(cart.Name);
-
-				out.println("</td>");
-				out.println("<td>");
-				out.println(cart.price);
-				
-				out.println("</td>");
-				out.println("<td>");
-				out.println("<form class = 'submit-button' method = 'get' action = 'CheckOut'>");
-				out.println("<input type='text' name = 'quantity' value = '"+cart.quantity+"'>");
-				out.println("</form>");
-				out.println("</td>");
-				out.println("<td>");
-				out.println("<form class = 'submit-button' method = 'get' action = 'RemoveCart'>");
-				out.println("<input type='hidden' name = 'cartId' value = '"+cart.Id+"'>");
-				out.println("<input type='submit'  value = 'Remove'>");
-				out.println("</form>");
-				out.println("</td>");
-				out.println("</tr>");
+		out.println("<form method=\"get\" action=\"SubmitReview\">");
+			out.println("<fieldset>");
 			
- //  out.println("Cost "+ cart.getCost());
- 			}
- 			out.println("<tr>");
-				out.println("<td>");
-
-	out.println("<form class = 'submit-button' method = 'get' action = 'CheckOut'>");
-			out.println("<input type='submit' name = 'submit' value = 'Check Out'>");
-			out.println("</form>");
-				out.println("</td>");
-				out.println("<td>");
-				
-				out.println("</tr>");
- 			//out.println("Total Value ="+cart.quantity+"'>");
- 		
+			out.println("<table>");
+			out.println("<tr>");
+			out.println("<td> Order Id: </td>");
+			out.println("<td>"+orderId+"</td>");
+			out.println("</tr>");						
 			
 			out.println("</table>");
+			out.println("</fieldset>");
+			out.println("<fieldset>");
+			out.println("<legend>Update :</legend>");
+			out.println("<table>");
+			out.println("<tr>");
+			out.println("<td> Status : </td>");
+			out.println("<td> <input disabled type=\"text\" name= \"status\" value = \""+status+"\">  </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+			out.println("<td> isCancelled: </td>");
+			out.println("<td> <input disabled type=\"text\" name=\"isCancelled\" value=\""+isCancelled+"\"> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
 
+			out.println("<tr>");
+			out.println("<td> Date: </td>");
+			out.println("<td> <input disabled type=\"text\" name=\"date\" value=\""+date+"\"> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
 
-
-
+			
+			out.println("</table>");
+			out.println("<br><br>");
+			out.println("<input type=\"submit\" value=\"Update\">");
+			out.println("</fieldset>");
+			out.println("</form>");	
 
 out.println("</article>");
 		

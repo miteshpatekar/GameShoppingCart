@@ -104,6 +104,7 @@ out.println("<div id='container'>");
             if(role.equals("customer"))
             {
             	out.println("<li class='end'><a href='/GameWebsite/MyOrders'>My Orders</a></li>"); 
+            	out.println("<li class='end'><a href='/GameWebsite/MyCart'>My Cart</a></li>");
             }
             if(role.equals("salesMan"))
             {
@@ -164,9 +165,7 @@ while(productIterator.hasNext())
 					out.println("<input type='hidden' name = 'productId' value = '"+p.Id+"'>");
 						out.println("<input class = 'submit-button' type = 'submit' name = 'XBox_Original' value = 'Write Review'>");
 					out.println("</form>");
-					out.println("<form class = 'submit-button' method = 'get' action = 'ViewReviews'>");
-						out.println("<input class = 'submit-button' type = 'submit' name = 'XBox_Original' value = 'View Reviews'>");
-					out.println("</form>");
+					
 				out.println("</td>");
 			out.println("</tr>");
 out.println("</table>");

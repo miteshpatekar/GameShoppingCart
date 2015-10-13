@@ -49,6 +49,7 @@ public class CancelOrder extends HttpServlet {
 		out.println(orderId);
 		HttpSession s=request.getSession();
 		String username=(String)s.getAttribute("userName");
+		String role=(String)s.getAttribute("role");
   		List<Cart> list= (List<Cart>) s.getAttribute("list");
 
   			if(list==null){
@@ -128,7 +129,23 @@ out.println("<div id='container'>");
             out.println("<li class='end'>");out.println("<a href='signup.html'>Sign Up");
             out.println("</a>");out.println("</li>");
             }
-            
+             if(role!=null)
+            {
+         
+            if(role.equals("customer"))
+            {
+            	out.println("<li class='end'><a href='/GameWebsite/MyOrders'>My Orders</a></li>"); 
+            	out.println("<li class='start selected'><a href='/GameWebsite/MyCart'>My Cart</a></li>");
+            }
+            if(role.equals("salesMan"))
+            {
+            	out.println("<li class='end'><a href='/GameWebsite/CustomerOrders'>Customer Orders</a></li>"); 
+            }
+            if(role.equals("storeManager"))
+            {
+            	out.println("<li class='end'><a href='/GameWebsite/UpdateProducts'>Update Products</a></li>"); 
+            }
+}
             if(username!=null)
     	{
     		out.println("<li class='end' style='float:right'><a href='/GameWebsite/LogOut'>Log Out</a></li>"); 

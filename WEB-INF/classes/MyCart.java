@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
-public class AddToCart extends HttpServlet {
+public class MyCart extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -46,7 +46,7 @@ public class AddToCart extends HttpServlet {
 		response.setContentType("text/html");		
 		PrintWriter out = response.getWriter();
 
-		int productId= 	Integer.parseInt(request.getParameter("productId"));
+		//int productId= 	Integer.parseInt(request.getParameter("productId"));
 		HttpSession s=request.getSession();
 		String username=(String)s.getAttribute("userName");
 		String role=(String)s.getAttribute("role");
@@ -61,7 +61,7 @@ public class AddToCart extends HttpServlet {
     			list =new ArrayList<>();
   			}
 
-		HashMapProducts hmp=new HashMapProducts();
+		/*HashMapProducts hmp=new HashMapProducts();
 		  hmp.setHashMapProduct();
 		  hmap=hmp.getHashMapProduct();
 		  Iterator<Integer> productIterator=hmap.keySet().iterator();
@@ -81,7 +81,7 @@ public class AddToCart extends HttpServlet {
 	           	out.println("Successfully Added to cart" +p.Name);
 	            }
 	            
-	        }
+	        }*/
 
 out.println("<html>");
 
@@ -212,8 +212,6 @@ out.println("<tr>");
  		
 			
 			out.println("</table>");
-
-
 
 
 

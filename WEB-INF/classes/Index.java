@@ -29,52 +29,58 @@ public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	MongoClient mongo;
 	public void init(){
-			// mongo = new MongoClient("localhost", 27017);
-			// DB db = mongo.getDB("gameWebsite");
+			 mongo = new MongoClient("localhost", 27017);
+
+			 // add Salesman and storemanager user
+			 DB db = mongo.getDB("gameWebsite");
 				
-			// // for adding storeManager user signup
-			// Map<String, Object> commandArguments = new BasicDBObject();
-			// DBCollection users = db.getCollection("users");
+			// for adding storeManager user signup
+			Map<String, Object> commandArguments = new BasicDBObject();
+			DBCollection users = db.getCollection("users");
 
 
-			// BasicDBObject whereQuery = new BasicDBObject();
-			// whereQuery.put("username", "storeadmin");
-			// DBCursor cursor = users.find(whereQuery);
-			// int flag1=0;
-			// while(cursor.hasNext()) {
-			// 	flag1=1;	    		
-			// 	}
+			BasicDBObject whereQuery = new BasicDBObject();
+			whereQuery.put("username", "storeadmin");
+			DBCursor cursor = users.find(whereQuery);
+			int flag1=0;
+			while(cursor.hasNext()) {
+				flag1=1;	  
+				cursor.next();  		
+				}
 
-			// 	if(flag1==0)
-			// 	{
-			// 		commandArguments.put("email", "storemanager@gamezon.com");
-			// 		commandArguments.put("username", "storeadmin");
-   //  				commandArguments.put("password", "sa123");
-   //  				commandArguments.put("role", "storeManager");  			
-   //  				BasicDBObject doc = new BasicDBObject(commandArguments);
-			// 		users.insert(doc);
-			// 	}
+				if(flag1==0)
+				{
+					commandArguments.put("email", "storemanager@gamezon.com");
+					commandArguments.put("username", "storeadmin");
+    				commandArguments.put("password", "sa123");
+    				commandArguments.put("role", "storeManager");  			
+    				BasicDBObject doc = new BasicDBObject(commandArguments);
+					users.insert(doc);
+				}
 			
 
 
-			// Map<String, Object> commandArguments1 = new BasicDBObject();
-			// BasicDBObject whereQuery1 = new BasicDBObject();
-			// whereQuery1.put("username", "salesadmin");
-			// DBCursor cursor1 = users.find(whereQuery1);
-			// int flag2=0;
-			// while(cursor1.hasNext()) {
-			// 	flag2=1;	    		
-			// 	}
+			Map<String, Object> commandArguments1 = new BasicDBObject();
+			BasicDBObject whereQuery1 = new BasicDBObject();
+			whereQuery1.put("username", "salesadmin");
+			DBCursor cursor1 = users.find(whereQuery1);
+			int flag2=0;
+			while(cursor1.hasNext()) {
+				flag2=1;	
+				cursor1.next();     		
+				}
 
-			// 	if(flag2==0)
-			// 	{
-			// 		commandArguments1.put("email", "salesman@gamezon.com");
-			// 		commandArguments1.put("username", "salesadmin");
-   //  				commandArguments1.put("password", "sa123");
-   //  				commandArguments1.put("role", "salesMan");    	
-   //  				BasicDBObject doc1 = new BasicDBObject(commandArguments1);
-			// 		users.insert(doc1);
-			// 	}
+				if(flag2==0)
+				{
+					commandArguments1.put("email", "salesman@gamezon.com");
+					commandArguments1.put("username", "salesadmin");
+    				commandArguments1.put("password", "sa123");
+    				commandArguments1.put("role", "salesMan");    	
+    				BasicDBObject doc1 = new BasicDBObject(commandArguments1);
+					users.insert(doc1);
+				}
+
+			
 			
 		
 	}
@@ -84,6 +90,11 @@ public class Index extends HttpServlet {
 		
 		response.setContentType("text/html");
 		
+
+		
+
+
+
 		PrintWriter out = response.getWriter();
 			HttpSession s=request.getSession();
     		String username=(String)s.getAttribute("userName");
@@ -135,6 +146,7 @@ out.println("<div id='container'>");
             if(role.equals("customer"))
             {
             	out.println("<li class='end'><a href='/GameWebsite/MyOrders'>My Orders</a></li>"); 
+            	out.println("<li class='end'><a href='/GameWebsite/MyCart'>My Cart</a></li>");
             }
             if(role.equals("salesMan"))
             {

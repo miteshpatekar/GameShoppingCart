@@ -41,6 +41,17 @@ public class SubmitReview extends HttpServlet {
 			//Get the values from the form
 			String productName = request.getParameter("productName");
 			String userName = request.getParameter("userName");
+
+			String manufacturer = request.getParameter("userName");
+
+			int age = Integer.parseInt(request.getParameter("age"));
+			String gender = request.getParameter("gender");	
+			String ocupation = request.getParameter("ocupation");
+			
+			String rcity = request.getParameter("rcity");	
+			String rstate = request.getParameter("rstate");
+			int rzip = Integer.parseInt(request.getParameter("rzip"));
+
 			int reviewRating = Integer.parseInt(request.getParameter("reviewRating"));	
 			String reviewDate = request.getParameter("reviewDate");
 			String reviewText = request.getParameter("reviewText");
@@ -57,6 +68,13 @@ public class SubmitReview extends HttpServlet {
 			BasicDBObject doc = new BasicDBObject("title", "myReviews").
 				append("productName", productName).
 				append("userName", userName).
+				append("manufacturer", manufacturer).
+				append("age", age).
+				append("gender", gender).
+				append("gender", ocupation).
+				append("reviewRating", rcity).
+				append("rstate", rstate).
+				append("rzip", rzip).
 				append("reviewRating", reviewRating).
 				append("reviewDate", reviewDate).
 				append("reviewText", reviewText);
