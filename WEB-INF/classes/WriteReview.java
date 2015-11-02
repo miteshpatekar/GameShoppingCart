@@ -33,6 +33,8 @@ public class WriteReview extends HttpServlet {
 	String imageLocation = " ";
 	String manufacturer = " ";
 	int productPrice = 0;
+	String category;
+	String retailer;
 	 static HashMap<Integer,Product> hmap ;
 	public void init(){
 		
@@ -68,7 +70,9 @@ public class WriteReview extends HttpServlet {
 	            	imageLocation=p.imagePath;
  					productName=p.Name;
  					productPrice=p.price;  	
- 					manufacturer=p.Manufacturer;			
+ 					manufacturer=p.Manufacturer;		
+ 					category=p.Category;
+ 					retailer=p.RetailerName;	
 	            }
 	            
 	        }
@@ -161,19 +165,38 @@ out.println("<div id='container'>");
 			out.println("<fieldset>");
 			out.println("<legend>Reviews:</legend>");
 			out.println("<table>");
+			
+			out.println("<tr>");
+			out.println("<td> Product Category: </td>");
+			out.println("<td> <input type=\"text\" name=\"category\" value=\""+category+"\"> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
 			out.println("<tr>");
 			out.println("<td> Product Name: </td>");
-			out.println("<td> <input disabled type=\"text\" name= \"productName\" value = \""+productName+"\">  </td>");
+			out.println("<td> <input type=\"text\" name= \"productName\" value = \""+productName+"\">  </td>");
 			out.println("</tr>");
 			out.println("<tr>");
 			out.println("<td> User Name: </td>");
-			out.println("<td> <input disabled type=\"text\" name=\"userName\" value=\""+username+"\"> </td>");
+			out.println("<td> <input type=\"text\" name=\"userName\" value=\""+username+"\"> </td>");
 			out.println("</tr>");
 			out.println("<tr>");
 
 			out.println("<tr>");
 			out.println("<td> Manufacturer: </td>");
-			out.println("<td> <input disabled type=\"text\" name=\"manufacturer\" value=\""+manufacturer+"\"> </td>");
+			out.println("<td> <input type=\"text\" name=\"manufacturer\" value=\""+manufacturer+"\"> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
+			out.println("<tr>");
+			out.println("<td> Product Retailer: </td>");
+			out.println("<td> <input type=\"text\" name=\"retailer\" value=\""+retailer+"\"> </td>");
+			out.println("</tr>");
+			out.println("<tr>");
+
+			out.println("<tr>");
+			out.println("<td> Price: </td>");
+			out.println("<td> <input type=\"number\" name=\"productPrice\" value=\""+productPrice+"\"> </td>");
 			out.println("</tr>");
 			out.println("<tr>");
 

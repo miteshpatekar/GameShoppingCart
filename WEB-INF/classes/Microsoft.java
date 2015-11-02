@@ -92,6 +92,8 @@ out.println("<div id='container'>");
             out.println("</a>");out.println("</li>");
              out.println("<li class='end'>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
              out.println("</a>");out.println("</li>");
+             out.println("<li class='end'>");out.println("<a href='/GameWebsite/DataAnalytics.html'>DataAnalytics");
+             out.println("</a>");out.println("</li>");
             if(username==null){
            out.println("<li class='end'>");out.println("<a href='signin.html'>Sign In");
             out.println("</a>");out.println("</li>");

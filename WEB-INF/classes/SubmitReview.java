@@ -39,11 +39,12 @@ public class SubmitReview extends HttpServlet {
 				
 		try{
 			//Get the values from the form
+			String category = request.getParameter("category");
 			String productName = request.getParameter("productName");
 			String userName = request.getParameter("userName");
-
-			String manufacturer = request.getParameter("userName");
-
+			String retailer = request.getParameter("retailer");
+			String manufacturer = request.getParameter("manufacturer");
+			int price = Integer.parseInt(request.getParameter("productPrice"));
 			int age = Integer.parseInt(request.getParameter("age"));
 			String gender = request.getParameter("gender");	
 			String ocupation = request.getParameter("ocupation");
@@ -67,15 +68,18 @@ public class SubmitReview extends HttpServlet {
 				
 			BasicDBObject doc = new BasicDBObject("title", "myReviews").
 				append("productName", productName).
+				append("category", category).
 				append("userName", userName).
+				append("retailer", retailer).
 				append("manufacturer", manufacturer).
+				append("price", price).
 				append("age", age).
 				append("gender", gender).
-				append("gender", ocupation).
-				append("reviewRating", rcity).
+				append("occupation", ocupation).
+				append("city", rcity).
 				append("rstate", rstate).
 				append("rzip", rzip).
-				append("reviewRating", reviewRating).
+				append("rating", reviewRating).
 				append("reviewDate", reviewDate).
 				append("reviewText", reviewText);
 									

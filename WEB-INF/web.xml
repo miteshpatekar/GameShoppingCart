@@ -235,4 +235,12 @@
         <servlet-name>MyCart</servlet-name>
         <url-pattern>/MyCart</url-pattern>      
     </servlet-mapping>
+    <servlet>
+        <servlet-name>FindReviews</servlet-name>
+        <servlet-class>FindReviews</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FindReviews</servlet-name>
+        <url-pattern>/FindReviews</url-pattern>
+    </servlet-mapping>
 </web-app>
