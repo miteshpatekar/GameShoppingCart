@@ -22,4 +22,10 @@ public class Product {
 
 	}
 
+ public String getName() {
+        return Name;
+    }
+     public String getManufacturer() {
+        return Manufacturer;
+    }
 }

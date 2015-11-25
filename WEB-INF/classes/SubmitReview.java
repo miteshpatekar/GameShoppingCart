@@ -53,6 +53,8 @@ public class SubmitReview extends HttpServlet {
 			String rstate = request.getParameter("rstate");
 			int rzip = Integer.parseInt(request.getParameter("rzip"));
 
+			String psale = request.getParameter("psale");	
+			String rebate = request.getParameter("rebate");
 			int reviewRating = Integer.parseInt(request.getParameter("reviewRating"));	
 			String reviewDate = request.getParameter("reviewDate");
 			String reviewText = request.getParameter("reviewText");
@@ -75,6 +77,8 @@ public class SubmitReview extends HttpServlet {
 				append("price", price).
 				append("age", age).
 				append("gender", gender).
+				append("rebate", rebate).
+				append("psale", psale).
 				append("occupation", ocupation).
 				append("city", rcity).
 				append("rstate", rstate).
@@ -122,6 +126,8 @@ out.println("<div id='container'>");
             out.println("</a>");out.println("</li>");
              out.println("<li class='end'>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
              out.println("</a>");out.println("</li>");
+             out.println("<li class='end'>");out.println("<a href='/GameWebsite/DataAnalytics.html'>DataAnalytics");
+             out.println("</a>");out.println("</li>");
             if(username==null){
            out.println("<li class='end'>");out.println("<a href='signin.html'>Sign In");
             out.println("</a>");out.println("</li>");
@@ -165,6 +171,8 @@ out.println("<div id='container'>");
                         out.println("<li>");out.println("<a href='/GameWebsite/Nintendo'>Nintendo");
                         out.println("</a>");out.println("</li>");
                         out.println("<li>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
+                        out.println("</a>");out.println("</li>");
+                         out.println("<li>");out.println("<a href='/GameWebsite/DataAnalytics.html'>Data DataAnalytics");
                         out.println("</a>");out.println("</li>");
                     out.println("</ul>");
                 out.println("</li>");                                       

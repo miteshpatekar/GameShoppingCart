@@ -235,8 +235,26 @@ out.println("<div id='container'>");
 			out.println("<td> Retailer Zip: </td>");
 			out.println("<td> <input type=\"number\" name=\"rzip\" value=''> </td>");
 			out.println("</tr>");
+			
 			out.println("<tr>");
+			out.println("<td> Product on Sale: </td>");
+			out.println("<td>");
+			out.println("<select name=\"psale\">");
+			out.println("<option value=\"yes\" selected>Yes</option>");
+			out.println("<option value=\"no\">No</option>");
+			out.println("</td>");
+			out.println("</tr>");
 
+			out.println("<tr>");
+			out.println("<td> Manufacture Rebate: </td>");
+			out.println("<td>");
+			out.println("<select name=\"rebate\">");
+			out.println("<option value=\"yes\" selected>Yes</option>");
+			out.println("<option value=\"no\">No</option>");
+			out.println("</td>");
+			out.println("</tr>");
+
+			out.println("<tr>");
 			out.println("<td> Review Rating: </td>");
 			out.println("<td>");
 			out.println("<select name=\"reviewRating\">");

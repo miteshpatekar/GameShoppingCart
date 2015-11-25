@@ -52,13 +52,28 @@ public class FindReviews extends HttpServlet {
 			
 			// Get the form data
 			String productName = request.getParameter("productName");
+			String category = request.getParameter("category");
 			int productPrice = Integer.parseInt(request.getParameter("productPrice"));
+			int age = Integer.parseInt(request.getParameter("age"));
+			String gender = request.getParameter("gender");
+			String occupation = request.getParameter("occupation");
+			String retailer = request.getParameter("retailer");
 			String retailerZipcode = request.getParameter("retailerZipcode");
 			String retailerCity = request.getParameter("retailerCity");
+			String retailerState = request.getParameter("retailerState");
 			
+			String rebate = request.getParameter("rebate");
+			String psale = request.getParameter("psale");
+
 			int reviewRating = Integer.parseInt(request.getParameter("reviewRating"));
+			String reviewDate = request.getParameter("reviewDate");
+			String reviewText = request.getParameter("reviewText");
+
 			String compareRating = request.getParameter("compareRating");
 			comparePrice = request.getParameter("comparePrice");
+			String compareAge = request.getParameter("compareAge");
+			String compareLiked = request.getParameter("compareLiked");
+
 			String returnValueDropdown = request.getParameter("returnValue");
 			String groupByDropdown = request.getParameter("groupByDropdown");
 			String sortByDropdown = request.getParameter("sortByDropdown");
@@ -83,9 +98,24 @@ public class FindReviews extends HttpServlet {
 			boolean groupByZip=false;
 			
 			boolean countOnly = false;
-					
+
+			boolean mostLiked=false;
+			boolean mostDisLiked=false;
 			DBObject sort1 = null;
-			sort1 = new BasicDBObject("$sort", new BasicDBObject("rating", -1));			
+			sort1 = new BasicDBObject("$sort", new BasicDBObject("rating", -1));
+			if(compareLiked!=null)
+			{
+				if(compareLiked.equals("Most_Liked"))
+					mostLiked=true;
+				else
+				{
+					mostDisLiked=true;
+					sort1 = new BasicDBObject("$sort", new BasicDBObject("rating", 1));
+				}
+					
+			}
+
+						
 			if(trending!=null)
 			{
 				groupBy=true;
@@ -98,7 +128,7 @@ public class FindReviews extends HttpServlet {
 			{
 				groupBy=true;
 				groupByCity=true;
-				sort1 = new BasicDBObject("$sort", new BasicDBObject("rating", -1));
+				sort1 = new BasicDBObject("$sort", new BasicDBObject("price", -1));
 				//reviewRating=5;
 				//compareRating="EQUALS_TO";
 			}
@@ -114,6 +144,10 @@ public class FindReviews extends HttpServlet {
 			{
 				if(sortByDropdown.equals("SORT_BY_RETAILERNAME"))
 					sort1 = new BasicDBObject("$sort", new BasicDBObject("retailer", -1));
+				if(sortByDropdown.equals("SORT_BY_AGE"))
+					sort1 = new BasicDBObject("$sort", new BasicDBObject("age", -1));
+				if(sortByDropdown.equals("SORT_BY_MANU"))
+					sort1 = new BasicDBObject("$sort", new BasicDBObject("manufacturer", -1));
 			}
 
 			DBCursor dbCursor = null;
@@ -161,7 +195,12 @@ public class FindReviews extends HttpServlet {
 								query.put("productName", productName);
 							}						
 							break;
-												
+						case "category":							
+							filterByProduct = true;
+							if(!productName.equals("ALL_Category")){
+								query.put("category", category);
+							}						
+							break;				
 						case "productPrice":
 							filterByPrice = true;
 							if (comparePrice.equals("EQUALS_TO")) {
@@ -172,7 +211,45 @@ public class FindReviews extends HttpServlet {
 								query.put("price", new BasicDBObject("$lt", productPrice));
 							}
 							break;
-												
+								
+						case "age":
+							filterByPrice = true;
+							if (compareAge.equals("EQUALS_TO")) {
+								query.put("age", age);
+							}else if(compareAge.equals("GREATER_THAN")){
+								query.put("age", new BasicDBObject("$gt", age));
+							}else if(compareAge.equals("LESS_THAN")){
+								query.put("age", new BasicDBObject("$lt", age));
+							}
+							break;
+
+						case "gender":
+							filterByZip = true;
+							query.put("gender", gender);
+							break;
+
+						case "occupation":
+							filterByZip = true;
+							query.put("occupation", occupation);
+							break;
+
+						case "rebate":
+							filterByZip = true;
+							query.put("rebate", rebate);
+							break;
+
+						case "psale":
+							filterByZip = true;
+							query.put("psale", psale);
+							break;
+
+						case "retailer":							
+							filterByProduct = true;
+							if(!productName.equals("ALL_Retailers")){
+								query.put("retailer", retailer);
+							}						
+							break;
+
 						case "retailerZipcode":
 							filterByZip = true;
 							query.put("rzip", retailerZipcode);
@@ -184,7 +261,10 @@ public class FindReviews extends HttpServlet {
 								query.put("city", retailerCity);
 							}							
 							break;
-												
+						case "retailerState": 
+							filterByZip = true;
+							query.put("retailerState", retailerState);
+							break;								
 						case "reviewRating":	
 							filterByRating = true;
 							if (compareRating.equals("EQUALS_TO")) {
@@ -193,7 +273,14 @@ public class FindReviews extends HttpServlet {
 								query.put("rating", new BasicDBObject("$gt", reviewRating));
 							}
 							break;
-													
+						case "reviewDate": 
+							filterByZip = true;
+							query.put("reviewDate", reviewDate);
+							break;		
+						case "reviewText": 
+							filterByZip = true;
+							query.put("reviewText", reviewText);
+							break;						
 						default:
 							//Show all the reviews if nothing is selected
 							noFilter = true;
@@ -263,7 +350,13 @@ public class FindReviews extends HttpServlet {
 						System.out.println("trend true" +returnValueDropdown);					
 						aggregate = myReviews.aggregate(sort1,group,project);
 					}
-					else if(returnValueDropdown.equals("TOP_5"))
+					else if(returnValueDropdown.equals("TOP_5") && mostLiked==true)
+					{
+						System.out.println("2nd true" +returnValueDropdown);
+						limit1 = new BasicDBObject("$limit", 5);
+						aggregate = myReviews.aggregate(sort1,limit1,group,project);
+					}
+					else if(returnValueDropdown.equals("TOP_5") && mostDisLiked==true)
 					{
 						System.out.println("2nd true" +returnValueDropdown);
 						limit1 = new BasicDBObject("$limit", 5);
@@ -280,17 +373,7 @@ public class FindReviews extends HttpServlet {
 												
 					//Construct the page content
 					constructGroupByCityContent(aggregate, output, countOnly);
-					AggregationOutput agout = myReviews.aggregate(
-new BasicDBObject("$group",
-new BasicDBObject("_id", "$city").append("price", new BasicDBObject("$max", "$price")).append("productName", new BasicDBObject("$push", "$productName"))
-));
-
-Iterator<DBObject> results = agout.results().iterator();
-while(results.hasNext()) {
-DBObject obj = results.next();
-
-System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"));
-}
+					
 					
 				}else if(groupByProduct){	
 
@@ -312,7 +395,7 @@ System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"
 										
 					project = new BasicDBObject("$project", projectFields);
 					
-					aggregate = myReviews.aggregate(group,project);				
+					aggregate = myReviews.aggregate(sort1,group,project);				
 							
 					//Construct the page content
 					constructGroupByProductContent(aggregate, output, countOnly);
@@ -341,7 +424,7 @@ System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"
 					project = new BasicDBObject("$project", projectFields);
 					sort1 = new BasicDBObject("$sort", new BasicDBObject("rating", -1));
 					limit1 = new BasicDBObject("$limit", 5);
-					aggregate = myReviews.aggregate(group,limit1,sort1,project);				
+					aggregate = myReviews.aggregate(sort1,group,project);				
 							
 					//Construct the page content
 					constructGroupByRetailerNameContent(aggregate, output, countOnly);
@@ -373,7 +456,7 @@ System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"
 										
 					project = new BasicDBObject("$project", projectFields);
 					
-					aggregate = myReviews.aggregate(group,project);				
+					aggregate = myReviews.aggregate(sort1,group,project);				
 							
 					//Construct the page content
 					constructGroupByZipContent(aggregate, output, countOnly);
@@ -429,13 +512,13 @@ System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"
 		String pageHeading = "Query Result";
 		String myPageTop = "<!DOCTYPE html>" + "<html lang=\"en\">"
 					+ "<head>	<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
-					+ "<title>Game Speed</title>"
+					+ "<title>GameZon</title>"
 					+ "<link rel=\"stylesheet\" href=\"styles.css\" type=\"text/css\" />"
 					+ "</head>"
 					+ "<body>"
 					+ "<div id=\"container\">"
 					+ "<header>"
-					+ "<h1><a href=\"/\">GameSpeed<span></span></a></h1><h2>Tutorial 3</h2>"
+					+ "<h1><a href=\"/\">GameZone<span></span></a></h1>"
 					+ "</header>"
 					+ "<nav>"
 					+ "<ul>"
@@ -499,13 +582,13 @@ System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"
 						+ "Retailer Zipcode:    " + bobj.getString("rzip") + "</br>"
 						+ "Retailer City:       " + bobj.getString("city") + "</br>"
 						+ "Retailer State:      " + bobj.getString("rstate") + "</br>"
-						//+ "Sale:                " + bobj.getString("productOnSale") + "</br>"
+						+ "Sale:                " + bobj.getString("psale") + "</br>"
 					    + "User ID:             " + bobj.getString("userName") + "</br>"
 					    + "User Age:            " + bobj.getString("age") + "</br>"
 						 + "User Gender:         " + bobj.getString("gender") + "</br>"
 						 + "User Occupation:     " + bobj.getString("occupation") + "</br>"
 						+ "Manufacturer:        " + bobj.getString("manufacturer") + "</br>"
-						//+ "Manufacturer Rebate: " + bobj.getString("manufacturerRebate") + "</br>"
+						+ "Manufacturer Rebate: " + bobj.getString("rebate") + "</br>"
 						+ "Rating:              " + bobj.getString("rating") + "</br>"
 						+ "Date:                " + bobj.getString("reviewDate") + "</br>"
 						+ "Review Text:         " + bobj.getString("reviewText") + "</td></tr>"
@@ -544,7 +627,7 @@ System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"
 				String maxp=bobj.getString("maxprice");
 				rowCount++;
 				tableData = "<tr><td><h3>City: "+bobj.getString("City")+"</h3></td>&nbsp"
-						+	"<td>Reviews Found: "+bobj.getString("Review Count")+"</td></tr>"
+						//+	"<td>Reviews Found: "+bobj.getString("Review Count")+"</td></tr>"
 						+	"<td>Price max: "+bobj.getString("maxprice")+"</td>"
 						+ "<td>Ratings max: "+bobj.getString("maxrating")+"</td></tr>";
 				
@@ -639,7 +722,7 @@ System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"
 				BasicDBList rating = (BasicDBList) bobj.get("Rating");
 				
 				rowCount++;
-				tableData = "<tr><td>Product Name: <h3>"+bobj.getString("Product")+"</h3></td>&nbsp"
+				tableData = "<tr><td><h3>Product Name:"+bobj.getString("Product")+"</h3></td>&nbsp"
 						+	"<td>Reviews Found: "+bobj.getString("Review Count")+"</td></tr>";
 				
 				pageContent = "<table class = \"query-table\">"+tableData+"</table>";		
@@ -686,8 +769,8 @@ System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"
 				BasicDBList rating = (BasicDBList) bobj.get("Rating");
 				
 				rowCount++;
-				tableData = "<tr><td>Product: "+bobj.getString("Product")+"</td>&nbsp"
-						+	"<td>Reviews Found: "+bobj.getString("Review Count")+"</td></tr>";
+				tableData = "<tr><td><h3>Product: "+bobj.getString("Product")+"</h3></td>&nbsp";
+						//+	"<td>Reviews Found: "+bobj.getString("Review Count")+"</td></tr>";
 				
 				pageContent = "<table class = \"query-table\">"+tableData+"</table>";		
 			    output.println(pageContent);
@@ -735,7 +818,7 @@ System.out.println(obj.get("_id")+" "+obj.get("price")+" "+obj.get("productName"
 				String maxp=bobj.getString("maxprice");
 				rowCount++;
 				tableData = "<tr><td><h3>Zip Code: "+bobj.getString("Product")+"</h3></td>&nbsp"
-						+	"<td>Reviews Found: "+bobj.getString("Review Count")+"</td></tr>"
+					//	+	"<td>Reviews Found: "+bobj.getString("Review Count")+"</td></tr>"
 						+	"<td>Price max: "+bobj.getString("maxprice")+"</td>"
 						+ "<td>Ratings max: "+bobj.getString("maxrating")+"</td></tr>";
 				

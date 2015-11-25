@@ -8,33 +8,13 @@
 	<title>GameZon</title>
 	<link rel="stylesheet" href="styles.css" type="text/css" />
     <script type="text/javascript" src="javascript.js"></script>
-    <!-- <link rel="stylesheet" type="text/css" href="stylesheet.css"> -->
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 
 <body onload="init()">
 <div id="container">
     <header>
     	<h1><a href="/">Game<span>Zoneeee</span></a></h1>    
-         <form name="autofillform" action="autocomplete">
-      <table border="0" cellpadding="5"> 
-        <tbody>
-          <tr>
-            <td><strong>Product Name:</strong></td>
-                        <td>
-                            <input type="text"
-                       size="40" 
-                       id="complete-field"
-                                   onkeyup="doCompletion()">
-                        </td>
-          </tr>
-          <tr>
-              <td id="auto-row" colspan="2">
-                <table id="complete-table" class="popupBox" />
-              </td>
-          </tr>
-        </tbody>
-      </table>
-    </form>
     </header>
     <nav>
     	<ul>
@@ -47,7 +27,16 @@
             <li class="end"><a href="signin.html">Sign In</a></li>
             <li class="end"><a href="signup.html">Sign Up</a></li>
 
-           
+            <form name="autofillform" action="autocomplete">
+      Composer Name:</strong>
+                            <input type="text"
+                       size="40" 
+                       id="complete-field"
+                                   onkeyup="doCompletion()">
+                       
+                <table id="complete-table" class="popupBox" />
+              
+    </form>
         </ul>
     </nav>
 
@@ -63,16 +52,6 @@
             <p>Check out our new products to have fun with games</p>	
             
             <p>Get the best Products delivered at your door</p>		
-             <form name="autofillform" action="autocomplete">
-                Composer Name:</strong>
-                            <input type="text"
-                       size="40" 
-                       id="complete-field"
-                                   onkeyup="doCompletion()">
-                       
-                <table id="complete-table" class="popupBox" />
-              
-    </form>
 		</article>
 		
     </section>

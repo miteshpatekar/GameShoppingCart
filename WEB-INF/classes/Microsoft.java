@@ -197,6 +197,8 @@ out.println("</table>");
                         out.println("</a>");out.println("</li>");
                         out.println("<li>");out.println("<a href='/GameWebsite/Accessories'>Accessories");
                         out.println("</a>");out.println("</li>");
+                        out.println("<li>");out.println("<a href='/GameWebsite/DataAnalytics.html'>Data DataAnalytics");
+                        out.println("</a>");out.println("</li>");
                     out.println("</ul>");
                 out.println("</li>");                                       
             out.println("</ul>");

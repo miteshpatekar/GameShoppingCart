@@ -60,6 +60,20 @@
 								<td> </td>
                             </tr>
 
+
+                            <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="category"> Select </td>
+                                <td> Product Category: </td>
+                                <td>
+                                    <select name="category">
+                                        <option value="ALL_Category">All category</option>
+                                        <option value="Game">Game</option>
+                                        <option value="Game Console">Game Console</option>
+                                        <option value="Accessories">Accessories</option>    
+                                </td>
+                                <td> </td>
+                            </tr>
+
                             <tr>
 								<td> <input type="checkbox" name="queryCheckBox" value="productPrice"> Select </td>
                                 <td> Product Price: </td>
@@ -72,6 +86,73 @@
                                     <input type="radio" name="comparePrice" value="MAX"> Max
 								</td>
                             </tr>
+
+                             <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="age"> Select </td>
+                                <td> Age: </td>
+                                <td>
+                                    <input type="number" name="age" value = "0" size=10 class="s" /> </td>
+                                <td>
+                                    <input type="radio" name="compareAge" value="EQUALS_TO" checked> Equals <br>
+                                    <input type="radio" name="compareAge" value="GREATER_THAN"> Greater Than <br>
+                                    <input type="radio" name="compareAge" value="LESS_THAN"> Less Than<br>
+                                    <input type="radio" name="compareAge" value="MAX"> Max
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="gender"> Select </td>
+                                <td> Gender: </td>
+                                <td>
+                                    <input type="text" name="gender" /> </td>
+                                <td> </td>
+                            </tr>
+                            
+                             <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="occupation"> Select </td>
+                                <td> Occupation: </td>
+                                <td>
+                                    <input type="text" name="occupation" /> </td>
+                                <td> </td>
+                            </tr>
+
+                            <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="rebate"> Select </td>
+                                <td> Manufacture Rebate: </td>
+                                <td>
+                                    <select name="rebate">
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                             
+                                </td>
+                                <td> </td>
+                            </tr>
+
+                            <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="psale"> Select </td>
+                                <td> Products on sale: </td>
+                                <td>
+                                    <select name="psale">
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                             
+                                </td>
+                                <td> </td>
+                            </tr>
+
+                            <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="retailer"> Select </td>
+                                <td> Retailer Name: </td>
+                                <td>
+                                    <select name="retailer">
+                                        <option value="ALL_Retailers">All Retailers</option>
+                                        <option value="Wallmart">Wallmart</option>
+                                        <option value="BestBuy">BestBuy</option>
+                                             
+                                </td>
+                                <td> </td>
+                            </tr>
+
 
                             <tr>
 								<td> <input type="checkbox" name="queryCheckBox" value="retailerZipcode"> Select </td>
@@ -87,6 +168,14 @@
                                 <td>
                                     <input type="text" name="retailerCity" value = "All" class="s" /> </td>
 								<td> </td>
+                            </tr>
+
+                            <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="retailerState"> Select </td>
+                                <td> Retailer State: </td>
+                                <td>
+                                    <input type="text" name="retailerState" value = "" class="s" /> </td>
+                                <td> </td>
                             </tr>
 
                             <tr>
@@ -106,6 +195,23 @@
                                     <input type="radio" name="compareRating" value="MAX"> Max
 								</td>
                             </tr>
+
+                            <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="reviewDate"> Select </td>
+                                <td> Review Date: </td>
+                                <td>
+                                    <input type="text" name="reviewDate" value = "" class="s" /> </td>
+                                <td> </td>
+                            </tr>
+
+                            <tr>
+                                <td> <input type="checkbox" name="queryCheckBox" value="reviewText"> Select </td>
+                                <td> Review Text: </td>
+                                <td>
+                                    <input type="text" name="reviewText" value = "" class="s" /> </td>
+                                <td> </td>
+                            </tr>
+
 							<tr>
 								<td>
 									Return:
@@ -141,7 +247,17 @@
                                 <td colspan = "3">
                                 <select name="sortByDropdown">
                                         <option value="SORT_BY_RETAILERNAME" selected>Retailer Name</option>
+                                        <option value="SORT_BY_AGE" selected>Age</option>
+                                        <option value="SORT_BY_MANU" selected>Manufacturer</option>
                                                                              
+                                </td>
+                            </tr>
+                            <tr>
+                            <td>
+                                    <input type="radio" name="compareLiked" value="Most_Liked">Most Liked<td>
+                                    <td>
+                                    <input type="radio" name="compareLiked" value="Most_Disliked"> Most Disliked</td>
+                                    
                                 </td>
                             </tr>
 							<tr>

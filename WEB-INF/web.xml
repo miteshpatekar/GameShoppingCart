@@ -243,4 +243,12 @@
         <servlet-name>FindReviews</servlet-name>
         <url-pattern>/FindReviews</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AutoCompleteServlet</servlet-name>
+        <servlet-class>AutoCompleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AutoCompleteServlet</servlet-name>
+        <url-pattern>/autocomplete</url-pattern>
+    </servlet-mapping>
 </web-app>
